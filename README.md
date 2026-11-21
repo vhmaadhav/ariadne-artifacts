@@ -18,12 +18,12 @@ Every number in the paper's tables can be recomputed from the CSVs here with `co
 | `predictions/driftsense/` | 30 CSV | Drift-Sense outputs: `shipped` and `noexit` variants on each split, the ablations (`ablations/`), the alternative decoders (`alt_decoders/`), a second-host rerun (`second_host/`), and the latency run. |
 | `predictions/zncc/`, `predictions/loftr/`, `predictions/sift/`, `predictions/qatm/` | 11 CSV, 1 JSON, 4 CSV + 1 JSON | Baselines: exhaustive ZNCC search, LoFTR (outdoor), SIFT + RANSAC and SIFT + LightGlue (both tuned on dev only), and QATM (Cheng et al. 2019, VGG19 quality-aware matching, threshold on dev only). |
 | `predictions/acceptance/` | 18 | EVT and logistic acceptance outputs (test, real, confirmation), their thresholds, the fitted logistic model, the rule, and the risk-coverage table. |
-| `reports/` | 30 | Report files (JSON and Markdown) written by `iris_report.py` and the summaries of each experiment. |
+| `reports/` | 32 | Report files (JSON and Markdown) written by `iris_report.py` and the summaries of each experiment. |
 | `runtime/` | 3 | Per-stage latency of the E7 run and its parity check. |
 | `code/evaluation/` | 6 | `iris_report.py` (metrics, bootstrap, re-thresholding), `iris_eval.py`, `iris_baselines.py`, `iris_tune_baselines.py`, `iris_make_real.py`, `summarize_report.py`. |
 | `code/acceptance/` | 3 | `evt_accept.py`, `logistic_accept.py` (acceptance rules), `log_hypotheses.py` (feature rows). |
 | `code/baselines/` | 2 files | `loftr_baseline.py` (LoFTR wrapper), `run_zncc_test.sh`. QATM code is not included: the official cplusx/QATM licence (commit 89b8728) is academic and non-commercial only; code available from the original authors. |
-| `code/analysis/` | 4 | `e6_analysis.py` (acceptance-rule table), `e8_analyze.py`, `e10_eval.py`, `plot_riskcoverage.py` (Figure 2). |
+| `code/analysis/` | 5 | `e6_analysis.py` (acceptance-rule table), `e8_analyze.py`, `e10_eval.py`, `plot_riskcoverage.py` (Figure 2), `e14_uniqueness_gate.py` (uniqueness gate, exploratory). |
 | `code/tests/`, `code/patches/` | 8, 2 | Unit tests (not re-run in this layout) and the two patches applied to the public pipeline. |
 | `docs/` | 4 | `FREEZE.md` (frozen configuration), `iris_spec.md` (metric definitions and conventions), `VARIANTS.md` (decode settings of each variant), `confirm_set_generation.md` (how the confirmation set was generated). |
 
@@ -46,6 +46,7 @@ Thresholds: Drift-Sense tau = 0.2617101 (from dev); `shipped` = tau 0.55. Bootst
 | Confirmation text (Section 5, "Fresh Confirmation Set") | Same numbers as Table 4, min rule | as Table 4; per-seed manifests `manifests/synthetic_confirm_seed710505.csv`, `..._seed710606.csv` | as Table 4 |
 | Runtime text (Section 5, "Runtime") | Median and p95 time per pair | `predictions/driftsense/latency100_shipped.csv` (5.04 s run), `runtime/e7_latency_pairs.csv` and `runtime/e7_latency_summary.json` (E7 run) | Median and p95 of the `seconds` column; not part of `iris_report`. Not recomputed in our check |
 | Second-host agreement text | 598 of 600 test decisions within 0.5 px | `predictions/driftsense/second_host/test600_noexit.csv` vs `test600_noexit.csv`; `reports/summary_e4_CHECK.md` | Compare the `x`, `y` columns by `pair_id`. Not recomputed in our check |
+| Uniqueness gate (Section 5, "Uniqueness gate (exploratory)"; E14) | Min rule plus margin gate (delta = 0.0956 fitted on dev150), on test600, confirm400, real800 and the E8 unfiltered absent set; exploratory and post hoc | `reports/e14_gate_results.json`, `reports/summary_e14_SUMMARY.md` | `python code/analysis/e14_uniqueness_gate.py`. The script reads per-pair feature files of the original run (E4, E2, E8 folders), which are not in this repository, so it is provided for reference and not recomputed in our check |
 | Larger dev split and E8 (not in the tables) | Threshold check on 800 dev pairs; unfiltered absent set (160) | `predictions/driftsense/dev_large800_noexit.csv`, `manifests/dev_large800.csv`, `reports/dev_large_threshold.json`; `predictions/driftsense/e8_absent160_noexit.csv`, `manifests/e8_absent_unfiltered160.csv`, `reports/e8_absent_unfiltered_metrics.json` | `code/analysis/e10_eval.py --manifest manifests/dev_large800.csv --pred predictions/driftsense/dev_large800_noexit.csv --tau 0.2617101`. `code/analysis/e8_analyze.py` expects the E8 folder layout of the original run and is included for reference. Not recomputed in our check |
 
 ## How to recompute all numbers from the CSVs
