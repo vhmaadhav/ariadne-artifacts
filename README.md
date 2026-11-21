@@ -22,7 +22,7 @@ Every number in the paper's tables can be recomputed from the CSVs here with `co
 | `runtime/` | 3 | Per-stage latency of the E7 run and its parity check. |
 | `code/evaluation/` | 6 | `iris_report.py` (metrics, bootstrap, re-thresholding), `iris_eval.py`, `iris_baselines.py`, `iris_tune_baselines.py`, `iris_make_real.py`, `summarize_report.py`. |
 | `code/acceptance/` | 3 | `evt_accept.py`, `logistic_accept.py` (acceptance rules), `log_hypotheses.py` (feature rows). |
-| `code/baselines/` | 2 files + `qatm/` (3 files) | `loftr_baseline.py` (LoFTR wrapper), `run_zncc_test.sh`; `qatm/` (`qatm.py`, `infer.py`, `test_qatm.py`), QATM baseline. |
+| `code/baselines/` | 2 files | `loftr_baseline.py` (LoFTR wrapper), `run_zncc_test.sh`. QATM code is not included: the official cplusx/QATM licence (commit 89b8728) is academic and non-commercial only; code available from the original authors. |
 | `code/analysis/` | 4 | `e6_analysis.py` (acceptance-rule table), `e8_analyze.py`, `e10_eval.py`, `plot_riskcoverage.py` (Figure 2). |
 | `code/tests/`, `code/patches/` | 8, 2 | Unit tests (not re-run in this layout) and the two patches applied to the public pipeline. |
 | `docs/` | 4 | `FREEZE.md` (frozen configuration), `iris_spec.md` (metric definitions and conventions), `VARIANTS.md` (decode settings of each variant), `confirm_set_generation.md` (how the confirmation set was generated). |
