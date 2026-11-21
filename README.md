@@ -24,6 +24,12 @@ Every number in the paper's tables can be recomputed from the CSVs here with `co
 | `code/acceptance/` | 3 | `evt_accept.py`, `logistic_accept.py` (acceptance rules), `log_hypotheses.py` (feature rows). |
 | `code/baselines/` | 2 files | `loftr_baseline.py` (LoFTR wrapper), `run_zncc_test.sh`. QATM code is not included: the official cplusx/QATM licence (commit 89b8728) is academic and non-commercial only; code available from the original authors. |
 | `code/analysis/` | 5 | `e6_analysis.py` (acceptance-rule table), `e8_analyze.py`, `e10_eval.py`, `plot_riskcoverage.py` (Figure 2), `e14_uniqueness_gate.py` (uniqueness gate, exploratory). |
+| `predictions/e15/` | 2 CSV | E15 untouched evaluation: `pred_synth_noexit.csv` (400 new synthetic pairs), `pred_real_noexit.csv` (480 pairs, 40 new tiles). |
+| `manifests/e15/`, `features/e15/` | 2 + 2 | E15 ground truth and per-pair feature rows (margins for the gate). |
+| `reports/e15/` | 3 | `eval_synth.json`, `eval_real.json` (scorer output, all rules, bootstrap CIs), `SUMMARY.md` (verdicts, deviations). |
+| `code/e15/` | 2 | `e15_eval.py` (scorer; subcommand `set`), `e15_thresholds.json` (frozen constants, copied from the prereg). |
+| `docs/PREREG_E15.md` | 1 | E15 pre-registration (commit ca78590 in the private ariadne repo, 21 Nov 2026 13:41 IST). Redacted copy: the Kaggle owner name in section 8 is replaced by `<kaggle-owner>`, so its sha256 differs from the committed file (committed: 29aefba0...). |
+| `runtime/e7_all/` | 1 | `SUMMARY.md`: latency across all four Kaggle runs and the laptop run. |
 | `code/tests/`, `code/patches/` | 8, 2 | Unit tests (not re-run in this layout) and the two patches applied to the public pipeline. |
 | `docs/` | 4 | `FREEZE.md` (frozen configuration), `iris_spec.md` (metric definitions and conventions), `VARIANTS.md` (decode settings of each variant), `confirm_set_generation.md` (how the confirmation set was generated). |
 
@@ -95,3 +101,7 @@ Notes on reading the output:
 ## Citation
 
 See `CITATION.cff`.
+
+## E15 (untouched evaluation)
+
+Run from the repository root: `python -I code/e15/e15_eval.py set --set synth --manifest manifests/e15/manifest_synth.csv --pred predictions/e15/pred_synth_noexit.csv --features features/e15/feat_synth_noexit.jsonl --thresholds code/e15/e15_thresholds.json --out out/eval_synth.json` (and `--set real` with the real files). Re-running reproduces every metric in `reports/e15/*.json` exactly. Only the `manifest`/`pred`/`features` input path strings differ, because the JSON was written from the original run layout (`results/ariadne/E15/`).

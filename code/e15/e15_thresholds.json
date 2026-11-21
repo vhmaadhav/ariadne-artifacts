@@ -1,0 +1,82 @@
+{
+ "_source": "Copied from docs/PREREG_E15.md sections 3, 4B and 6 (21 Nov 2026). Edit only by a new pre-registration.",
+ "prereg_path": "docs/PREREG_E15.md",
+ "prereg_sha256": "29aefba02b256588753b85cb34c5a8064917712c17f03f6bbb3e17a9a479011c",
+ "tau_main": 0.2617101,
+ "tau_err5": 0.3108282387256622,
+ "delta_net": 0.09562161564826965,
+ "margin_excl_px": 20,
+ "wrong_repeat_px": 20,
+ "decision_tol_px": 5,
+ "success_ks": [
+  1,
+  5
+ ],
+ "boot_B": 2000,
+ "boot_seed": 20261010,
+ "h1_band": [
+  0.867,
+  0.942
+ ],
+ "h3_cross_max": 0.1,
+ "rule_names": {
+  "R1": "min_tau_main",
+  "R2": "min_tau_err5",
+  "R3": "gate"
+ },
+ "expected": {
+  "synth_pairs": 400,
+  "real_pairs": 480,
+  "real_present": 320,
+  "real_absent_same": 80,
+  "real_absent_cross": 80,
+  "per_tile": {
+   "real_A": 4,
+   "real_B": 4,
+   "real_absent_same": 2,
+   "real_absent_cross": 2
+  }
+ },
+ "real_tile_ids": [
+  "m1_sem0013",
+  "m1_sem0029",
+  "m1_sem0045",
+  "m1_sem0061",
+  "m1_sem0077",
+  "m1_sem0093",
+  "m1_sem0109",
+  "m1_sem0125",
+  "m1_sem0141",
+  "m1_sem0157",
+  "m1_sem0173",
+  "m1_sem0189",
+  "m1_sem0205",
+  "m1_sem0221",
+  "m1_sem0237",
+  "m1_sem0253",
+  "m1_sem0269",
+  "m1_sem0285",
+  "m1_sem0301",
+  "m1_sem0317",
+  "m2_sem0013",
+  "m2_sem0029",
+  "m2_sem0045",
+  "m2_sem0061",
+  "m2_sem0077",
+  "m2_sem0093",
+  "m2_sem0109",
+  "m2_sem0125",
+  "m2_sem0141",
+  "m2_sem0157",
+  "m2_sem0173",
+  "m2_sem0189",
+  "m2_sem0205",
+  "m2_sem0221",
+  "m2_sem0237",
+  "m2_sem0253",
+  "m2_sem0269",
+  "m2_sem0285",
+  "m2_sem0301",
+  "m2_sem0317"
+ ]
+}
