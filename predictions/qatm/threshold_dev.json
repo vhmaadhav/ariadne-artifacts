@@ -1,0 +1,4 @@
+{
+ "threshold": 0.5334680676460266,
+ "rule": "max rejection F1, absent positive, lowest threshold on ties, dev only"
+}
