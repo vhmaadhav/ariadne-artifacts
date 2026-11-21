@@ -1,0 +1,8 @@
+{
+  "method": "evt",
+  "score": "evt",
+  "threshold": -0.20750272594112057,
+  "rule": "err",
+  "alpha": 0.05,
+  "score_map": "tanh(-log10(NFA)/10)"
+}

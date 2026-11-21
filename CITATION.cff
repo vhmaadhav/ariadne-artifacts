@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use these evaluation artifacts, please cite the paper."
+type: dataset
+title: "Drift-Sense evaluation artifacts: manifests, per-pair predictions and report scripts"
+abstract: "Evaluation artifacts released with the IRIS 27 paper 'Drift-Sense: Cross-Magnification Reference Localisation with Rejection in Repeating SEM Layouts'. Manifests and per-pair predictions for every reported method, plus the scripts that recompute the reported tables from the CSV files. No images and no model weights."
+authors:
+  - family-names: "V H"
+    given-names: "Maadhav"
+  - family-names: "A S"
+    given-names: "Sachin"
+  - family-names: "T"
+    given-names: "Nakul"
+repository-code: "https://github.com/vhmaadhav/ariadne-artifacts"
+url: "https://github.com/vhmaadhav/ariadne-artifacts"
+license: Apache-2.0
+keywords:
+  - scanning electron microscopy
+  - template matching
+  - reference localisation
+  - rejection
+  - evaluation

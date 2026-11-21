@@ -1,0 +1,644 @@
+{
+ "test": {
+  "mismatch_noexit_found_vs_file": 92,
+  "n": 600,
+  "present": 478,
+  "absent": 122,
+  "diffs": {
+   "logistic": {
+    "dS5": {
+     "point": -0.05230125523012552,
+     "lo": -0.07438236328468445,
+     "hi": -0.030104303377771695
+    },
+    "dAE": {
+     "point": -0.02502599292992306,
+     "lo": -0.04420004287315286,
+     "hi": -0.00904757670706084
+    }
+   },
+   "evt": {
+    "dS5": {
+     "point": -0.41422594142259417,
+     "lo": -0.4610606505534222,
+     "hi": -0.3703605825698849
+    },
+    "dAE": {
+     "point": -0.004277693610195171,
+     "lo": -0.039402016133848,
+     "hi": 0.02790909513612519
+    }
+   }
+  },
+  "methods": {
+   "noexit": {
+    "success5": {
+     "value": 0.895397489539749,
+     "lo": 0.8672060857538035,
+     "hi": 0.9224186213919517,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.6359832635983264,
+     "lo": 0.5916622340425531,
+     "hi": 0.6800887370982773,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.8451882845188284,
+     "lo": 0.8103439388553145,
+     "hi": 0.8781004757274812,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.06550218340611354,
+     "lo": 0.04473881075535417,
+     "hi": 0.0911064111834177
+    },
+    "wrong_accepted": 30,
+    "accepted": 458,
+    "absent_accepted": {
+     "value": 9.0,
+     "lo": 4.0,
+     "hi": 15.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 29.0,
+     "lo": 19.0,
+     "hi": 40.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.8560606060606061,
+     "lo": 0.8064453613403351,
+     "hi": 0.8979663444325098,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.9778705672542698,
+     "lo": 0.966985801832489,
+     "hi": 0.98737050301024,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.08158995815899582,
+     "lo": 0.058212058212058215,
+     "hi": 0.10766751843746439,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.05055055068224372,
+    "k_op": 458,
+    "rank_matches_accepted_set": true
+   },
+   "logistic": {
+    "success5": {
+     "value": 0.8430962343096234,
+     "lo": 0.808811274509804,
+     "hi": 0.8750066067653277,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.600418410041841,
+     "lo": 0.5569613701286789,
+     "hi": 0.6460936908278421,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.797071129707113,
+     "lo": 0.7580282737080429,
+     "hi": 0.8344019673310047,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.04047619047619048,
+     "lo": 0.023417835802928496,
+     "hi": 0.06083095958696812
+    },
+    "wrong_accepted": 17,
+    "accepted": 420,
+    "absent_accepted": {
+     "value": 2.0,
+     "lo": 0.0,
+     "hi": 5.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 60.0,
+     "lo": 46.0,
+     "hi": 75.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.7947019867549668,
+     "lo": 0.7416564685314686,
+     "hi": 0.8421052631578947,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.9492763564030455,
+     "lo": 0.9304084711584711,
+     "hi": 0.9661162373215416,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.08158995815899582,
+     "lo": 0.058212058212058215,
+     "hi": 0.10766751843746439,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.05325486579138426,
+    "k_op": 420,
+    "rank_matches_accepted_set": true
+   },
+   "evt": {
+    "success5": {
+     "value": 0.4811715481171548,
+     "lo": 0.4364745415393165,
+     "hi": 0.5262082092022509,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.3368200836820084,
+     "lo": 0.2970043859649123,
+     "hi": 0.3788187372708758,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.4476987447698745,
+     "lo": 0.40172607309427666,
+     "hi": 0.49159663865546216,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.061224489795918366,
+     "lo": 0.032388663967611336,
+     "hi": 0.09163429614873837
+    },
+    "wrong_accepted": 15,
+    "accepted": 245,
+    "absent_accepted": {
+     "value": 11.0,
+     "lo": 5.0,
+     "hi": 17.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 244.0,
+     "lo": 220.0,
+     "hi": 268.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.46540880503144655,
+     "lo": 0.4097979734094698,
+     "hi": 0.5220772060870887,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.8297894231428768,
+     "lo": 0.7874124501180643,
+     "hi": 0.869944285514375,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.08158995815899582,
+     "lo": 0.058212058212058215,
+     "hi": 0.10766751843746439,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.09731273573472486,
+    "k_op": 245,
+    "rank_matches_accepted_set": true
+   }
+  }
+ },
+ "real": {
+  "mismatch_noexit_found_vs_file": 89,
+  "n": 800,
+  "present": 640,
+  "absent": 160,
+  "diffs": {
+   "logistic": {
+    "dS5": {
+     "point": -0.2640625,
+     "lo": -0.3031640625000001,
+     "hi": -0.2265625
+    },
+    "dAE": {
+     "point": 0.003459011955143282,
+     "lo": -0.011808648439135417,
+     "hi": 0.01703117188028761
+    }
+   },
+   "evt": {
+    "dS5": {
+     "point": 0.0015625000000000222,
+     "lo": -0.0031250000000000444,
+     "hi": 0.0078125
+    },
+    "dAE": {
+     "point": -0.03682423540559036,
+     "lo": -0.0564551512592746,
+     "hi": -0.01979913123225862
+    }
+   }
+  },
+  "methods": {
+   "noexit": {
+    "success5": {
+     "value": 0.9078125,
+     "lo": 0.8734375,
+     "hi": 0.9375390624999997,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.86875,
+     "lo": 0.8296875,
+     "hi": 0.90625,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.9,
+     "lo": 0.8640625,
+     "hi": 0.934375,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.07484076433121019,
+     "lo": 0.05263157894736842,
+     "hi": 0.09890460976722956
+    },
+    "wrong_accepted": 47,
+    "accepted": 628,
+    "absent_accepted": {
+     "value": 10.0,
+     "lo": 4.0,
+     "hi": 17.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 22.0,
+     "lo": 11.0,
+     "hi": 34.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.9036144578313253,
+     "lo": 0.8654854159939727,
+     "hi": 0.940809968847352,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.984765625,
+     "lo": 0.9753287353515624,
+     "hi": 0.9926370849609375,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.0890625,
+     "lo": 0.0609375,
+     "hi": 0.1203125,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.0604593868816576,
+    "k_op": 628,
+    "rank_matches_accepted_set": true
+   },
+   "logistic": {
+    "success5": {
+     "value": 0.64375,
+     "lo": 0.6015625,
+     "hi": 0.684375,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.61875,
+     "lo": 0.575,
+     "hi": 0.6609375,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.640625,
+     "lo": 0.6,
+     "hi": 0.68125,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.07829977628635347,
+     "lo": 0.05176091081593928,
+     "hi": 0.10648765790152097
+    },
+    "wrong_accepted": 35,
+    "accepted": 447,
+    "absent_accepted": {
+     "value": 4.0,
+     "lo": 0.0,
+     "hi": 9.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 197.0,
+     "lo": 172.0,
+     "hi": 224.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.6081871345029239,
+     "lo": 0.5766972562169739,
+     "hi": 0.640973630831643,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.7273144531250001,
+     "lo": 0.6888825683593751,
+     "hi": 0.7638090820312499,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.0890625,
+     "lo": 0.0609375,
+     "hi": 0.1203125,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.12397349923170356,
+    "k_op": 447,
+    "rank_matches_accepted_set": true
+   },
+   "evt": {
+    "success5": {
+     "value": 0.909375,
+     "lo": 0.878125,
+     "hi": 0.9375,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.8703125,
+     "lo": 0.8343359375,
+     "hi": 0.90625,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.9015625,
+     "lo": 0.8671875,
+     "hi": 0.9328125,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.03801652892561983,
+     "lo": 0.023332362728785357,
+     "hi": 0.053424603994394214
+    },
+    "wrong_accepted": 23,
+    "accepted": 605,
+    "absent_accepted": {
+     "value": 3.0,
+     "lo": 0.0,
+     "hi": 6.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 38.0,
+     "lo": 22.0,
+     "hi": 56.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.8845070422535212,
+     "lo": 0.8390198245739142,
+     "hi": 0.9294117647058824,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.98125,
+     "lo": 0.9688516845703128,
+     "hi": 0.99072314453125,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.0890625,
+     "lo": 0.0609375,
+     "hi": 0.1203125,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.044678357053054264,
+    "k_op": 605,
+    "rank_matches_accepted_set": true
+   }
+  }
+ },
+ "confirm": {
+  "mismatch_noexit_found_vs_file": 75,
+  "n": 400,
+  "present": 323,
+  "absent": 77,
+  "diffs": {
+   "logistic": {
+    "dS5": {
+     "point": -0.04334365325077394,
+     "lo": -0.06874999999999998,
+     "hi": -0.02108275444118822
+    },
+    "dAE": {
+     "point": -0.04246961942671806,
+     "lo": -0.06533868204368155,
+     "hi": -0.022035606497084352
+    }
+   },
+   "evt": {
+    "dS5": {
+     "point": -0.42724458204334365,
+     "lo": -0.4782642243692968,
+     "hi": -0.37575712748789675
+    },
+    "dAE": {
+     "point": -0.06184258600465358,
+     "lo": -0.09517054229958646,
+     "hi": -0.028124736952861953
+    }
+   }
+  },
+  "methods": {
+   "noexit": {
+    "success5": {
+     "value": 0.913312693498452,
+     "lo": 0.8825350140056022,
+     "hi": 0.9421978495001493,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.7058823529411765,
+     "lo": 0.6578035676872886,
+     "hi": 0.756841010053776,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.8854489164086687,
+     "lo": 0.8507936507936508,
+     "hi": 0.9196428571428571,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.08668730650154799,
+     "lo": 0.05739988839070949,
+     "hi": 0.1176644622345979
+    },
+    "wrong_accepted": 28,
+    "accepted": 323,
+    "absent_accepted": {
+     "value": 9.0,
+     "lo": 4.0,
+     "hi": 15.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 9.0,
+     "lo": 4.0,
+     "hi": 15.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.8831168831168831,
+     "lo": 0.8251704545454546,
+     "hi": 0.9333333333333333,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.9864098749547665,
+     "lo": 0.9756506483170285,
+     "hi": 0.994734862431572,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.06811145510835913,
+     "lo": 0.04229288756233393,
+     "hi": 0.09597825379559123,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.04275714581183315,
+    "k_op": 323,
+    "rank_matches_accepted_set": true
+   },
+   "logistic": {
+    "success5": {
+     "value": 0.8699690402476781,
+     "lo": 0.8312883435582822,
+     "hi": 0.9058469547693686,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.6718266253869969,
+     "lo": 0.6199376947040498,
+     "hi": 0.7234840115992345,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.848297213622291,
+     "lo": 0.8081729365033005,
+     "hi": 0.8858093061415846,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.04421768707482993,
+     "lo": 0.022721791873721135,
+     "hi": 0.06953793998495983
+    },
+    "wrong_accepted": 13,
+    "accepted": 294,
+    "absent_accepted": {
+     "value": 2.0,
+     "lo": 0.0,
+     "hi": 5.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 31.0,
+     "lo": 21.0,
+     "hi": 42.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.819672131147541,
+     "lo": 0.7484642786463488,
+     "hi": 0.8756218905472637,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.9511881307546943,
+     "lo": 0.9290460263346711,
+     "hi": 0.9711428565553593,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.06811145510835913,
+     "lo": 0.04229288756233393,
+     "hi": 0.09597825379559123,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.0498678934696318,
+    "k_op": 294,
+    "rank_matches_accepted_set": true
+   },
+   "evt": {
+    "success5": {
+     "value": 0.48606811145510836,
+     "lo": 0.43209876543209874,
+     "hi": 0.5396341463414634,
+     "valid_bootstrap": 2000
+    },
+    "success1": {
+     "value": 0.3746130030959752,
+     "lo": 0.32499601910828024,
+     "hi": 0.42687364150123164,
+     "valid_bootstrap": 2000
+    },
+    "success3": {
+     "value": 0.47058823529411764,
+     "lo": 0.41538338658146967,
+     "hi": 0.5243939847373934,
+     "valid_bootstrap": 2000
+    },
+    "accepted_error": {
+     "point": 0.024844720496894408,
+     "lo": 0.005779516311208557,
+     "hi": 0.05194992868403272
+    },
+    "wrong_accepted": 4,
+    "accepted": 161,
+    "absent_accepted": {
+     "value": 2.0,
+     "lo": 0.0,
+     "hi": 5.0,
+     "valid_bootstrap": 2000
+    },
+    "present_declined": {
+     "value": 164.0,
+     "lo": 145.0,
+     "hi": 183.0,
+     "valid_bootstrap": 2000
+    },
+    "F1": {
+     "value": 0.47468354430379744,
+     "lo": 0.4041776651532749,
+     "hi": 0.5396176220543142,
+     "valid_bootstrap": 2000
+    },
+    "auroc_present": {
+     "value": 0.8615857826384142,
+     "lo": 0.8176292933128416,
+     "hi": 0.9008549163859647,
+     "valid_bootstrap": 2000
+    },
+    "gross_rate": {
+     "value": 0.06811145510835913,
+     "lo": 0.04229288756233393,
+     "hi": 0.09597825379559123,
+     "valid_bootstrap": 2000
+    },
+    "aurc": 0.07837278669958471,
+    "k_op": 161,
+    "rank_matches_accepted_set": true
+   }
+  }
+ }
+}

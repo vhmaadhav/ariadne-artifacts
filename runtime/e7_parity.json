@@ -1,0 +1,25 @@
+{
+  "pairs": [
+    {
+      "pair_id": "s1_00000",
+      "identical": true
+    },
+    {
+      "pair_id": "s1_00001",
+      "identical": true
+    },
+    {
+      "pair_id": "s1_00002",
+      "identical": true
+    },
+    {
+      "pair_id": "s1_00003",
+      "identical": true
+    },
+    {
+      "pair_id": "s1_00004",
+      "identical": true
+    }
+  ],
+  "identical": true
+}

@@ -1,0 +1,356 @@
+diff --git a/driftsense/matching.py b/driftsense/matching.py
+--- a/driftsense/matching.py
++++ b/driftsense/matching.py
+@@ -886,6 +886,48 @@
+     return [(int(ii[o]), int(jj[o]), float(vals[o])) for o in order]
+ 
+ 
++# Per-hypothesis evidence for offline calibration (ariadne E4). Only used when
++# return_hypotheses=True; the decision path never reads these.
++LOG_NET_TOPK = 10          # off-peak network response maxima kept per hypothesis
++LOG_ZNCC_TOPK = 50         # off-peak native ZNCC maxima kept per hypothesis
++LOG_ZNCC_EXCLUDE = 16.0    # px disc around the winner excluded from the ZNCC decoy list
++
++
++def offpeak_cells(prob: np.ndarray, cell: tuple[int, int], k: int,
++                  min_sep: float = 2.0) -> list[tuple[int, int, float]]:
++    """Top-k local maxima of a response map farther than `min_sep` cells from `cell`."""
++    out: list[tuple[int, int, float]] = []
++    for i, j, v in find_peaks(prob, max_peaks=k + 32):
++        if np.hypot(i - cell[0], j - cell[1]) > min_sep:
++            out.append((i, j, v))
++            if len(out) == k:
++                break
++    return out
++
++
++def zncc_surface_peaks(search_std: np.ndarray, template_std: np.ndarray,
++                       winner_xy: tuple[float, float], k: int,
++                       exclude: float) -> tuple[list[list[float]], int, int]:
++    """Native ZNCC surface over the whole search frame, as decoy evidence.
++
++    Returns (top-k off-disc local maxima as [value, x, y], number of off-disc
++    local maxima, number of local maxima in total). Centres use the convention
++    of refine_zncc: window top-left plus template half-size, pixel-edge frame.
++    """
++    th, tw = template_std.shape
++    surf = cv2.matchTemplate(search_std.astype(np.float32),
++                             template_std.astype(np.float32), cv2.TM_CCOEFF_NORMED)
++    surf = np.nan_to_num(surf, nan=-1.0, neginf=-1.0).astype(np.float32)
++    peaks = find_peaks(surf, max_peaks=10 ** 9)
++    wx, wy = winner_xy
++    off: list[list[float]] = []
++    for i, j, v in peaks:
++        x, y = j + tw / 2.0, i + th / 2.0
++        if np.hypot(x - wx, y - wy) > exclude:
++            off.append([float(v), float(x), float(y)])
++    return off[:k], len(off), len(peaks)
++
++
+ def select_peak(prob: np.ndarray, search_hw: tuple[int, int],
+                 template_hw: tuple[int, int],
+                 tie_tol: float = TIE_REL_TOL) -> tuple[int, int, float]:
+@@ -1715,6 +1757,9 @@
+             t_nom = F.interpolate(t_nom, size=(TEMPLATE_SIZE, TEMPLATE_SIZE), mode="area")
+         ref_feat = model.encoder(t_nom)
+ 
++    log_th, log_tw = (make_template(reference, float(SCALE), 0.0).shape
++                      if return_hypotheses else (0, 0))
++
+     def attempt(m: float, rot: float) -> dict:
+         nonlocal verification_secs
+         if canonicalize:
+@@ -1723,7 +1768,7 @@
+             canon, M = search, None
+         coarse = locate(model, reference, canon, device, refine=False,
+                         factor=float(SCALE), rotation_deg=0.0,
+-                        ref_feat=ref_feat, **kw)
++                        ref_feat=ref_feat, return_heatmap=return_hypotheses, **kw)
+         cx, cy = (uncanonicalize_point(M, coarse["x"], coarse["y"])
+                   if canonicalize else (coarse["x"], coarse["y"]))
+         out = dict(coarse)
+@@ -1731,6 +1776,14 @@
+                     "canonical": (coarse["x"], coarse["y"])})
+         if return_hypotheses:
+             out.update({"coarse_x_native": float(cx), "coarse_y_native": float(cy)})
++            net = []
++            for ii, jj, vv in offpeak_cells(coarse["heatmap"], coarse["peak_cell"], LOG_NET_TOPK):
++                px, py = response_to_center(ii, jj, log_th, log_tw)
++                if canonicalize:
++                    px, py = uncanonicalize_point(M, px, py)
++                net.append([float(vv), float(px), float(py)])
++            out.update({"net_offpeak": net, "net_peak_cell": [int(v) for v in coarse["peak_cell"]]})
++            out.pop("heatmap", None)
+         template = None
+         if refine and native_verification:
+             template = make_template(reference, m, rot)
+@@ -1740,6 +1793,12 @@
+             if np.hypot(rx - cx, ry - cy) <= 10.0:
+                 out.update({"x": rx, "y": ry})
+             out["zncc"] = float(zn)
++            if return_hypotheses:
++                out["x_snap"], out["y_snap"] = float(out["x"]), float(out["y"])
++                zp, zn_off, zn_all = zncc_surface_peaks(
++                    search_corr_std, standardize(template / 255.0),  # type: ignore[arg-type]
++                    (out["x"], out["y"]), LOG_ZNCC_TOPK, LOG_ZNCC_EXCLUDE)
++                out.update({"zncc_peaks": zp, "zncc_n_sites": zn_off, "zncc_n_local_max": zn_all})
+         if search_features is not None:
+             import time
+             t_verify = time.perf_counter()
+@@ -2039,6 +2098,16 @@
+             "rank": float(r.get("rank", np.nan)),
+             "band": float(r.get("band", np.nan)),
+             "dog": float(r.get("dog", np.nan)),
++            "psr": float(r.get("psr", np.nan)),
++            "apce": float(r.get("apce", np.nan)),
++            "selected": bool(r is best),
++            "x_snap": float(r.get("x_snap", np.nan)),
++            "y_snap": float(r.get("y_snap", np.nan)),
++            "net_offpeak": r.get("net_offpeak", []),
++            "net_peak_cell": r.get("net_peak_cell", []),
++            "zncc_peaks": r.get("zncc_peaks", []),
++            "zncc_n_sites": int(r.get("zncc_n_sites", -1)),
++            "zncc_n_local_max": int(r.get("zncc_n_local_max", -1)),
+         } for r in candidates]
+         best["secs_verification"] = float(verification_secs)
+     else:
+@@ -2113,6 +2182,7 @@
+     result["y"] = float(np.clip(result["y"], 0, h - 1))  # type: ignore[call-overload]  # dict value widens to object
+     if return_heatmap:
+         result["heatmap"] = prob
++        result["peak_cell"] = (int(i), int(j))
+     return result
+ 
+ 
+diff --git a/scripts/iris_eval.py b/scripts/iris_eval.py
+--- a/scripts/iris_eval.py
++++ b/scripts/iris_eval.py
+@@ -18,6 +18,8 @@
+     SHIPPED_BAND, SHIPPED_STRIP_ROTATION, SHIPPED_SUBPIXEL_ROWS,
+     SHIPPED_THRESHOLD, SHIPPED_VERIFICATION,
+ )
++# scripts/ is on sys.path when this file runs as a script (spawned workers too).
++from log_hypotheses import feature_row
+ 
+ FIELDS = ["pair_id", "method", "found", "score", "x", "y", "theta",
+           "scale", "seconds", "status"]
+@@ -85,7 +87,7 @@
+ 
+ def _worker(job):
+     """Cache a model per process, and bound torch/OpenCV threads there."""
+-    row, variant, weights, threads, threshold = job
++    row, variant, weights, threads, threshold, want_features = job
+     import torch
+     torch.set_num_threads(threads)
+     import cv2
+@@ -93,6 +95,7 @@
+     import infer
+     from driftsense.matching import locate_phase2
+ 
++    features = None
+     prediction = dict.fromkeys(FIELDS)
+     prediction.update(pair_id=row["pair_id"], method=variant, found=0,
+                       score=0, x=float("nan"), y=float("nan"),
+@@ -110,6 +113,8 @@
+         search = infer.read_gray(row["search_path"])
+         kwargs = decode_kwargs(variant)
+         kwargs["label_convention"] = row["label_convention"]
++        # Instrumentation: adds evidence to the result; the decision is unchanged.
++        kwargs["return_hypotheses"] = bool(want_features)
+         started = time.perf_counter()
+         res = locate_phase2(model, reference, search, device, **kwargs)
+         prediction["seconds"] = time.perf_counter() - started
+@@ -118,11 +123,13 @@
+         prediction.update(found=int(score >= threshold), score=score,
+                           x=res["x"], y=res["y"], theta=res["theta"],
+                           scale=res["scale"], status="ok")
++        if want_features:
++            features = feature_row(row["pair_id"], res, variant)
+     except (Exception, SystemExit) as error:
+         if started is not None:
+             prediction["seconds"] = time.perf_counter() - started
+         prediction["status"] = f"{type(error).__name__}: {error}"
+-    return prediction
++    return prediction, features
+ 
+ 
+ def _read_predictions(path, variant):
+@@ -162,25 +169,41 @@
+     output = Path(args.out)
+     output.parent.mkdir(parents=True, exist_ok=True)
+     previous = _read_predictions(output, args.variant)
++    if args.features_out and previous:
++        raise ValueError("--features-out needs a fresh --out (resumed rows have no features)")
+     completed = {row["pair_id"] for row in previous}
+     rows = sorted((row for row in rows if row["pair_id"] not in completed),
+                   key=lambda row: row["pair_id"])
+     weights = args.weights or VARIANT_WEIGHTS.get(args.variant, "weights/driftsense.pt")
+-    jobs = [(row, args.variant, weights, args.threads, args.threshold) for row in rows]
++    jobs = [(row, args.variant, weights, args.threads, args.threshold,
++             bool(args.features_out)) for row in rows]
+     print(f"{len(jobs)} pending pairs, {len(previous)} resumed; "
+           f"variant={args.variant}, jobs={args.jobs}, threads={args.threads}", flush=True)
+-    with output.open("a", newline="", encoding="utf-8") as handle:
+-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+-        if handle.tell() == 0:
+-            writer.writeheader()
+-            handle.flush()
+-        if jobs:
+-            with mp.get_context("spawn").Pool(args.jobs) as pool:
+-                for i, prediction in enumerate(pool.imap(_worker, jobs, chunksize=1), 1):
+-                    writer.writerow(prediction)
+-                    handle.flush()
+-                    print(f"{i}/{len(jobs)} {prediction['pair_id']} "
+-                          f"{prediction['status']}", flush=True)
++    feature_handle = None
++    if args.features_out:
++        feature_path = Path(args.features_out)
++        feature_path.parent.mkdir(parents=True, exist_ok=True)
++        feature_handle = feature_path.open("w", encoding="utf-8")
++    try:
++        with output.open("a", newline="", encoding="utf-8") as handle:
++            writer = csv.DictWriter(handle, fieldnames=FIELDS)
++            if handle.tell() == 0:
++                writer.writeheader()
++                handle.flush()
++            if jobs:
++                with mp.get_context("spawn").Pool(args.jobs) as pool:
++                    results = pool.imap(_worker, jobs, chunksize=1)
++                    for i, (prediction, features) in enumerate(results, 1):
++                        writer.writerow(prediction)
++                        handle.flush()
++                        if feature_handle is not None and features is not None:
++                            feature_handle.write(json.dumps(features, allow_nan=True) + "\n")
++                            feature_handle.flush()
++                        print(f"{i}/{len(jobs)} {prediction['pair_id']} "
++                              f"{prediction['status']}", flush=True)
++    finally:
++        if feature_handle is not None:
++            feature_handle.close()
+     # A resumed run can append IDs before older rows. Sort atomically at the end.
+     predictions = _read_predictions(output, args.variant)
+     if predictions != sorted(predictions, key=lambda row: row["pair_id"]):
+@@ -201,6 +224,7 @@
+     parser.add_argument("--threads", type=int, choices=range(1, 5), default=4)
+     parser.add_argument("--limit", type=int)
+     parser.add_argument("--weights")
++    parser.add_argument("--features-out", help="JSONL evidence rows (log_hypotheses.py); fresh --out only")
+     parser.add_argument("--threshold", type=float, default=SHIPPED_THRESHOLD)
+     parser.add_argument("--list-variants", action="store_true")
+     args = parser.parse_args(argv)
+diff --git a/scripts/log_hypotheses.py b/scripts/log_hypotheses.py
+new file mode 100644
+--- /dev/null
++++ b/scripts/log_hypotheses.py
+@@ -0,0 +1,111 @@
++"""Per-pair evidence rows for calibrated rejection (ariadne E4).
++
++`feature_row` turns one `locate_phase2(..., return_hypotheses=True)` result into
++a JSON-serialisable dict. One JSON line per pair goes to `--features-out` in
++scripts/iris_eval.py (patch: patches/log_hypotheses.patch). The prediction CSV
++is unchanged, so the features can be joined to it on pair_id.
++
++Row schema (all coordinates are in the manifest's label convention unless the
++key says `native_edge`, which is the internal pixel-edge frame):
++
++  pair_id, method            str
++  x, y, theta, scale         float   final pose (as in the prediction CSV)
++  score, confidence          float   network score and shipped confidence
++  zncc_med3, winner_margin   float   confidence term and pose-contest margin
++  rigid_x, rigid_y           float   native_edge rigid answer before row correction
++  n_hypotheses               int     pose hypotheses evaluated
++  selected_index             int     index into `hypotheses` (-1 if none)
++  hypotheses                 list    one dict per evaluated hypothesis:
++      scale, theta           float   pose of the hypothesis
++      pose_peak              float   coarse probe peak (pose search)
++      network_score          float   network peak height (selects the candidate)
++      peak_ratio             float   runner-up / winner network peak (locate)
++      psr, apce              float   peak-quality statistics on the network map
++      coarse_x_native,
++      coarse_y_native        float   network location mapped to native_edge
++      x_snap, y_snap         float   native ZNCC snap (native_edge, before polish)
++      zncc                   float   native ZNCC at the snap
++      rank, band             float   verifier scores (instrumentation only)
++      selected               bool    True for the hypothesis that won
++      net_offpeak            list    top-10 [score, x, y] off-peak maxima of the
++                                     network map (x, y native_edge, cell centres)
++      net_peak_cell          [i, j]  winning response cell
++      zncc_peaks             list    top-50 [value, x, y] off-disc maxima of the
++                                     full-frame native ZNCC surface (native_edge)
++      zncc_n_sites           int     number of off-disc local maxima (disc = 16 px)
++      zncc_n_local_max       int     all local maxima of that surface
++
++The 5 features for the logistic model (`five_features`) are:
++  net_score     = selected network_score
++  net_margin    = 1 - selected peak_ratio
++  native_zncc   = selected zncc
++  pose_margin   = winner_margin
++  loc_agree     = log1p(distance in px between the selected network location and
++                  the rigid native answer)
++"""
++from __future__ import annotations
++
++import math
++
++FEATURE_NAMES = ("net_score", "net_margin", "native_zncc", "pose_margin", "loc_agree")
++
++
++def _f(value) -> float:
++    try:
++        return float(value)
++    except (TypeError, ValueError):
++        return float("nan")
++
++
++def feature_row(pair_id: str, res: dict, method: str = "noexit") -> dict:
++    """Flatten one locate_phase2 result (return_hypotheses=True) into a JSON row."""
++    hyps = list(res.get("hypotheses", []))
++    sel = next((i for i, h in enumerate(hyps) if h.get("selected")), -1)
++    rows = []
++    for h in hyps:
++        rows.append({
++            "scale": _f(h.get("scale")), "theta": _f(h.get("theta")),
++            "pose_peak": _f(h.get("pose_peak")), "network_score": _f(h.get("network_score")),
++            "peak_ratio": _f(h.get("peak_ratio")), "psr": _f(h.get("psr")),
++            "apce": _f(h.get("apce")),
++            "coarse_x_native": _f(h.get("coarse_x_native")),
++            "coarse_y_native": _f(h.get("coarse_y_native")),
++            "x_snap": _f(h.get("x_snap")), "y_snap": _f(h.get("y_snap")),
++            "zncc": _f(h.get("zncc")), "rank": _f(h.get("rank")), "band": _f(h.get("band")),
++            "selected": bool(h.get("selected", False)),
++            "net_offpeak": [[_f(v) for v in p] for p in h.get("net_offpeak", [])],
++            "net_peak_cell": [int(v) for v in h.get("net_peak_cell", [])],
++            "zncc_peaks": [[_f(v) for v in p] for p in h.get("zncc_peaks", [])],
++            "zncc_n_sites": int(h.get("zncc_n_sites", -1)),
++            "zncc_n_local_max": int(h.get("zncc_n_local_max", -1)),
++        })
++    return {
++        "pair_id": str(pair_id), "method": method,
++        "x": _f(res.get("x")), "y": _f(res.get("y")), "theta": _f(res.get("theta")),
++        "scale": _f(res.get("scale")), "score": _f(res.get("score")),
++        "confidence": _f(res.get("confidence")), "zncc_med3": _f(res.get("zncc_med3")),
++        "winner_margin": _f(res.get("winner_margin")),
++        "rigid_x": _f(res.get("rigid_x")), "rigid_y": _f(res.get("rigid_y")),
++        "n_hypotheses": int(res.get("n_hypotheses", len(hyps))),
++        "selected_index": sel,
++        "hypotheses": rows,
++    }
++
++
++def five_features(row: dict) -> dict:
++    """The five logistic features (see module docstring). NaN when undefined."""
++    nan = float("nan")
++    idx = int(row.get("selected_index", -1))
++    hyps = row.get("hypotheses", [])
++    if idx < 0 or idx >= len(hyps):
++        return {name: nan for name in FEATURE_NAMES}
++    sel = hyps[idx]
++    dist = math.hypot(sel["coarse_x_native"] - row["rigid_x"],
++                      sel["coarse_y_native"] - row["rigid_y"])
++    return {
++        "net_score": sel["network_score"],
++        "net_margin": 1.0 - sel["peak_ratio"],
++        "native_zncc": sel["zncc"],
++        "pose_margin": row["winner_margin"],
++        "loc_agree": math.log1p(dist) if math.isfinite(dist) else nan,
++    }

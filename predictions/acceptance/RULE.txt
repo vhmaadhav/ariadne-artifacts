@@ -1,0 +1,10 @@
+E6 rules, written 2026-11-20 about 20:05 IST, BEFORE any test, real or confirmation prediction.
+Source: code/RUN_BRIEF.md step 8 defaults, as given in the user's instruction of 2026-11-20.
+- Logistic (code/logistic_accept.py): L2 lam=1.0, 5 features, fit on DEV only. Threshold = max F1 of the
+  correct-match class on dev out-of-fold scores (5 folds, seed 20261010): --rule f1.
+- EVT (code/evt_accept.py via logistic_accept.py predict --score evt): threshold on dev at the 5% accepted-error
+  target (--rule err --alpha 0.05), calibrated on dev only, applied unchanged to test, confirmation and real.
+- Min rule: noexit score at tau = 0.2617101 (dev threshold, from results/e2/SUMMARY.md).
+- Pre-registered verdict: a rule beats the min rule only if, on CONFIRMATION, it lowers the accepted-decision
+  error without lowering success@5 by more than 1 point (or raises success@5 at equal or lower accepted error).
+- Paired differences vs min rule: cluster bootstrap, 2000 reps, seed 20261010.

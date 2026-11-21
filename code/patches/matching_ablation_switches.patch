@@ -1,0 +1,272 @@
+diff --git a/driftsense/matching.py b/driftsense/matching.py
+index 4d77845..f036d33 100644
+--- a/driftsense/matching.py
++++ b/driftsense/matching.py
+@@ -924,7 +924,8 @@ def parabolic(a: float, b: float, c: float) -> float:
+ 
+ 
+ def refine_zncc(search: np.ndarray, template: np.ndarray,
+-                cx: float, cy: float, radius: int = REFINE_RADIUS) -> tuple[float, float, float]:
++                cx: float, cy: float, radius: int = REFINE_RADIUS, *,
++                subpixel: str | None = None) -> tuple[float, float, float]:
+     """Snap a coarse centre to the local ZNCC optimum at full resolution.
+ 
+     Searches +/- `radius` px around the coarse box position. The placement
+@@ -932,10 +933,14 @@ def refine_zncc(search: np.ndarray, template: np.ndarray,
+     definition): "bicubic" upsamples the correlation surface around the peak
+     (driftsense.subpixel.refine_bicubic; rescues the 1px-tier boundary pairs,
+     Debella-Gilo & Kaab 2011), "parabola" is the historical 1-D parabolic
+-    fit through the peak. Both share this function's contract and window.
++    fit through the peak. An explicit subpixel overrides the config; "integer"
++    retains the integer correlation peak with no fitted offset.
+     """
+     from driftsense.config import SHIPPED_SUBPIXEL
+-    if SHIPPED_SUBPIXEL == "bicubic":
++    subpixel = SHIPPED_SUBPIXEL if subpixel is None else subpixel
++    if subpixel not in {"parabola", "integer", "bicubic"}:
++        raise ValueError("subpixel must be parabola, integer or bicubic")
++    if subpixel == "bicubic":
+         from driftsense.subpixel import refine_bicubic
+         return refine_bicubic(search, template, cx, cy, radius=radius)
+     h, w = search.shape
+@@ -956,8 +961,10 @@ def refine_zncc(search: np.ndarray, template: np.ndarray,
+     _, score, _, loc = cv2.minMaxLoc(res)
+     pj, pi = loc
+ 
+-    dx = parabolic(res[pi, pj - 1], res[pi, pj], res[pi, pj + 1]) if 0 < pj < res.shape[1] - 1 else 0.0
+-    dy = parabolic(res[pi - 1, pj], res[pi, pj], res[pi + 1, pj]) if 0 < pi < res.shape[0] - 1 else 0.0
++    dx = (parabolic(res[pi, pj - 1], res[pi, pj], res[pi, pj + 1])
++          if subpixel != "integer" and 0 < pj < res.shape[1] - 1 else 0.0)
++    dy = (parabolic(res[pi - 1, pj], res[pi, pj], res[pi + 1, pj])
++          if subpixel != "integer" and 0 < pi < res.shape[0] - 1 else 0.0)
+ 
+     return (x0c + pj + dx) + tw / 2.0, (y0c + pi + dy) + th / 2.0, float(score)
+ 
+@@ -1184,7 +1191,8 @@ def drift_row_refine(search: np.ndarray, template: np.ndarray, cx: float, cy: fl
+                      band_sigma: float = DRIFT_BAND_SIGMA,
+                      frame_conf: float | None = None,
+                      quiet_gate: float | None = DRIFT_QUIET_GATE,
+-                     quiet_max_shift: float = DRIFT_QUIET_MAX_SHIFT) -> tuple[float, float] | None:
++                     quiet_max_shift: float = DRIFT_QUIET_MAX_SHIFT, *,
++                     subpixel: str | None = None) -> tuple[float, float] | None:
+     """Re-place a match at the drift row the label is defined on.
+ 
+     Returns the corrected `(x, y)`, or None to decline -- the caller then keeps
+@@ -1282,7 +1290,8 @@ def drift_row_refine(search: np.ndarray, template: np.ndarray, cx: float, cy: fl
+                      borderMode=cv2.BORDER_REPLICATE)
+ 
+     rx, ry, _ = refine_zncc(standardize(flat / 255.0), standardize(template / 255.0),
+-                            cx - xa, cy - ya, radius=radius)
++                            cx - xa, cy - ya, radius=radius,
++                            **({} if subpixel is None else {"subpixel": subpixel}))
+     # How much of the row's measured offset to believe (issue #89). The
+     # measurement is  m = s + e:  the row's own drift sample s (sd sigma_j)
+     # plus measurement noise e (sd sigma_m). `resid_sd` above already
+@@ -1576,7 +1585,9 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+                   strip_rot: bool = False,
+                   scale_bounds: tuple[float, float] = PHASE2_SCALE_BOUNDS,
+                   rotation_bounds: tuple[float, float] = PHASE2_ROTATION_BOUNDS,
+-                  coarse_rotations: int = 11, **kw) -> dict:
++                  coarse_rotations: int = 11, *, canonicalize: bool = True,
++                  native_verification: bool = True, subpixel: str = "parabola",
++                  auto_early_exit: bool = True, **kw) -> dict:
+     """Phase 2 inference: unknown scale and rotation, with a rejection score.
+ 
+     scale_bounds / rotation_bounds are the feasible pose box: the coarse sweep
+@@ -1601,6 +1612,19 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+     label_convention's "edge", so the signature default reproduces the
+     historical output exactly; register.py passes the shipped value.
+ 
++    Ablation options are keyword-only. canonicalize=False keeps pose search
++    but gives the network the original search and the nominal template, with
++    no inverse pose mapping of its coordinates. verification="network" selects
++    the greatest network score while retaining native stages.
++    native_verification=False skips native ZNCC verification and refinement,
++    pose polish (including scale adoption and XY refit), strip rotation,
++    drift-row correction, and median-ZNCC confidence verification. Confidence
++    is then the network score. Coarse pose search still uses correlation.
++    subpixel="integer" disables offsets in every ZNCC snap, including the
++    drift-row flattened-patch snap; independent row-offset estimates remain
++    controlled by subpixel_rows. auto_early_exit=False disables the automatic
++    uncontested gate only; early_exit_zncc remains an explicit independent gate.
++
+     band=False is the measured default (full 2,250-pair A/B, 2026-08-31):
+     band-passing the coarse probe cost 0.45 rubric points (paired loc delta
+     +0.167, CI [+0.014, +0.327]; rescued 18 / broken 9) and buys no measurable
+@@ -1627,16 +1651,21 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+     band=True only for A/B measurement.
+     """
+     verification = str(verification).lower()
+-    valid_verification = {"zncc", "majority", "consensus"}
++    valid_verification = {"zncc", "majority", "consensus", "network"}
+     if verification not in valid_verification:
+         raise ValueError(f"verification must be one of {sorted(valid_verification)}")
+     if label_convention not in LABEL_CONVENTIONS:
+         raise ValueError(f"label_convention must be one of {LABEL_CONVENTIONS}, "
+                          f"got {label_convention!r}")
++    if subpixel not in {"parabola", "integer", "bicubic"}:
++        raise ValueError("subpixel must be parabola, integer or bicubic")
++    from driftsense.config import SHIPPED_SUBPIXEL
++    # Leave the historical call shape intact for the configured default.
++    subpixel_kw = {} if subpixel == SHIPPED_SUBPIXEL else {"subpixel": subpixel}
+ 
+     # The baseline path never enters this block. Research instrumentation and
+     # optional selectors share one set of full-search feature maps per pair.
+-    need_verification_scores = return_hypotheses or verification != "zncc"
++    need_verification_scores = return_hypotheses or verification in {"consensus", "majority"}
+     search_features = None
+     verification_secs = 0.0
+     if need_verification_scores:
+@@ -1672,7 +1701,7 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+     if denoise and denoise >= 3:
+         search_corr = cv2.medianBlur(search, int(denoise) | 1)
+ 
+-    search_corr_std = standardize(search_corr / 255.0) if refine else None
++    search_corr_std = standardize(search_corr / 255.0) if refine and native_verification else None
+ 
+     ref_feat = None
+     if model is not None and hasattr(model, "encoder") and device is not None:
+@@ -1688,22 +1717,26 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+ 
+     def attempt(m: float, rot: float) -> dict:
+         nonlocal verification_secs
+-        canon, M = canonicalize_search(search, m, rot)
++        if canonicalize:
++            canon, M = canonicalize_search(search, m, rot)
++        else:
++            canon, M = search, None
+         coarse = locate(model, reference, canon, device, refine=False,
+                         factor=float(SCALE), rotation_deg=0.0,
+                         ref_feat=ref_feat, **kw)
+-        cx, cy = uncanonicalize_point(M, coarse["x"], coarse["y"])
++        cx, cy = (uncanonicalize_point(M, coarse["x"], coarse["y"])
++                  if canonicalize else (coarse["x"], coarse["y"]))
+         out = dict(coarse)
+         out.update({"x": cx, "y": cy, "scale": float(m), "theta": float(rot),
+                     "canonical": (coarse["x"], coarse["y"])})
+         if return_hypotheses:
+             out.update({"coarse_x_native": float(cx), "coarse_y_native": float(cy)})
+         template = None
+-        if refine:
++        if refine and native_verification:
+             template = make_template(reference, m, rot)
+             rx, ry, zn = refine_zncc(search_corr_std,  # type: ignore[arg-type]  # only None when refine is False; guarded above
+                                      standardize(template / 255.0),
+-                                     cx, cy, radius=refine_radius)
++                                     cx, cy, radius=refine_radius, **subpixel_kw)
+             if np.hypot(rx - cx, ry - cy) <= 10.0:
+                 out.update({"x": rx, "y": ry})
+             out["zncc"] = float(zn)
+@@ -1725,6 +1758,8 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+         return out
+ 
+     def choose(candidates: list[dict]) -> dict:
++        if verification == "network":
++            return max(candidates, key=lambda c: c.get("score", -np.inf))
+         zncc_i = max(range(len(candidates)),
+                      key=lambda i: candidates[i].get("zncc", candidates[i].get("score", -np.inf)))
+         if verification == "zncc" or len(candidates) == 1:
+@@ -1764,7 +1799,7 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+             # driftsense.config.EARLY_EXIT_GATES -- see that block for what each
+             # term means and where the numbers were validated. They fire only on
+             # the first hypothesis, and only when there is a second one to skip.
+-            if len(candidates) == 1 and len(cands) > 1 and _early_exit_fires(
++            if auto_early_exit and len(candidates) == 1 and len(cands) > 1 and _early_exit_fires(
+                     r, cands[0][2] - cands[1][2]):
+                 break
+         best = choose(candidates)
+@@ -1818,7 +1853,7 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+     # it is recorded on every path -- including the shipped default-zncc one.
+     best["winner_margin"] = winner_margin(candidates, best)
+ 
+-    if refine and polish:
++    if refine and polish and native_verification:
+         # Kept for analysis: the pose the polish started from. Free (they are
+         # already in hand) and the only way an offline sweep can separate what
+         # the polish did from what the stages after it did.
+@@ -1846,7 +1881,7 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+             tpl = make_template(reference, best["scale"], best["theta"])
+             rx, ry, zn = refine_zncc(standardize(search / 255.0),
+                                      standardize(tpl / 255.0),
+-                                     best["x"], best["y"], radius=2)
++                                     best["x"], best["y"], radius=2, **subpixel_kw)
+             if np.hypot(rx - best["x"], ry - best["y"]) <= 3.0:
+                 best.update({"x": rx, "y": ry, "zncc": float(zn)})
+ 
+@@ -1894,7 +1929,7 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+     # internal pixel-edge frame whatever `label_convention` says, like every
+     # other diagnostic.
+     best["rigid_x"], best["rigid_y"] = rigid_xy
+-    if subpixel_rows:
++    if subpixel_rows and native_verification:
+         # Never let the refinement cost a pair. register.py zero-fills the whole
+         # row on any exception, so a throw here would turn a correctly located
+         # pair into found=0 with score 0.0 -- indistinguishable, in the output
+@@ -1911,7 +1946,7 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+             # a second denoised match on every pair.
+             moved = drift_row_refine(search, tpl, best["x"], best["y"],
+                                      label_convention=label_convention,
+-                                     frame_conf=float(best.get("score", 0.0)))
++                                     frame_conf=float(best.get("score", 0.0)), **subpixel_kw)
+             if moved is not None:
+                 best["x"] = moved[0]
+         except Exception as e:  # noqa: BLE001
+@@ -1969,7 +2004,9 @@ def locate_phase2(model, reference: np.ndarray, search: np.ndarray, device,
+     # none, so it lifts present pairs and leaves absent ones where they were.
+     # Only this term sees the filtered frame: the network was trained on noisy
+     # frames, and the localisation stages keep the raw pixels.
+-    if SHIPPED_CONFIDENCE == "min_med3":
++    if not native_verification:
++        best["confidence"] = float(best.get("score", 0.0))
++    elif SHIPPED_CONFIDENCE == "min_med3":
+         best["zncc_med3"] = denoised_zncc(reference, search, rigid_xy[0], rigid_xy[1],
+                                           best["scale"], best["theta"])
+         best["confidence"] = float(min(float(best.get("score", 0.0)), best["zncc_med3"]))
+@@ -2021,7 +2058,7 @@ def locate(model, reference: np.ndarray, search: np.ndarray, device,
+            tie_tol: float = TIE_REL_TOL, refine_radius: int = REFINE_RADIUS,
+            refine_accept_px: float = 10.0, factor: float = SCALE,
+            rotation_deg: float = 0.0,
+-           ref_feat: torch.Tensor | None = None) -> dict:
++           ref_feat: torch.Tensor | None = None, *, subpixel: str | None = None) -> dict:
+     """Full inference: reference + search (uint8 grayscale) -> centre (x, y).
+ 
+     ref_feat: optional precomputed template-branch embedding. The template is
+@@ -2063,7 +2100,8 @@ def locate(model, reference: np.ndarray, search: np.ndarray, device,
+               "peak_ratio": peak_ratio, "psr": psr, "apce": apce}
+ 
+     if refine:
+-        rx, ry, zn = refine_zncc(sea_n, tpl_n, cx, cy, radius=refine_radius)
++        rx, ry, zn = refine_zncc(sea_n, tpl_n, cx, cy, radius=refine_radius,
++                                 **({} if subpixel is None else {"subpixel": subpixel}))
+         # Accept the snap only if it stayed in the same neighbourhood; a large
+         # jump means correlation latched onto an adjacent repeat, which is
+         # exactly the failure the network is there to avoid.
+@@ -2134,7 +2172,7 @@ def locate_tta(model, reference: np.ndarray, search: np.ndarray, device,
+                transforms=range(8), cluster_px: float = 6.0,  # noqa: B008
+                refine: bool = True, verify_alpha: float = VERIFY_ALPHA,
+                verify_top_k: int = VERIFY_TOP_K, factor: float = SCALE,
+-               rotation_deg: float = 0.0) -> dict:
++               rotation_deg: float = 0.0, *, subpixel: str | None = None) -> dict:
+     """Dihedral test-time augmentation with cluster voting.
+ 
+     Each view proposes a centre; proposals are mapped back to the original
+@@ -2188,7 +2226,8 @@ def locate_tta(model, reference: np.ndarray, search: np.ndarray, device,
+         best, best_s = ranked[0], -np.inf
+         for c in cands:
+             ccx, ccy = _centroid(c)
+-            _, _, zn = refine_zncc(sea_n, tpl_n, ccx, ccy)
++            _, _, zn = refine_zncc(sea_n, tpl_n, ccx, ccy,
++                                   **({} if subpixel is None else {"subpixel": subpixel}))
+             s = zn + verify_alpha * (sum(m[2] for m in c) / total)
+             if s > best_s:
+                 best, best_s = c, s
+@@ -2204,7 +2243,8 @@ def locate_tta(model, reference: np.ndarray, search: np.ndarray, device,
+               "agreement": len(best) / max(len(props), 1)}
+ 
+     if refine:
+-        rx, ry, zn = refine_zncc(sea_n, tpl_n, cx, cy)
++        rx, ry, zn = refine_zncc(sea_n, tpl_n, cx, cy,
++                                 **({} if subpixel is None else {"subpixel": subpixel}))
+         if np.hypot(rx - cx, ry - cy) <= 10.0:
+             result.update({"x": rx, "y": ry, "zncc": zn})
+ 

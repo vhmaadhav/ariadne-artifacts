@@ -1,0 +1,36 @@
+{
+  "dev_pairs": 800,
+  "dev_absent": 144,
+  "dev_present": 656,
+  "rule_F1": "max rejection F1 (absent positive), lowest threshold on ties, dev only",
+  "rule_err5": "lowest threshold with accepted-decision error <= 0.05 on dev, dev only",
+  "tau_F1": 0.1548467129468917,
+  "tau_err5": 0.3108282387256622,
+  "dev_stats_tau_F1": {
+    "threshold": 0.1548467129468917,
+    "accepted": 670,
+    "absent_accepted": 29,
+    "present_declined": 15,
+    "accepted_decision_error": 0.11044776119402985,
+    "F1": 0.8394160583941606,
+    "success@5": 0.9085365853658537
+  },
+  "dev_stats_tau_err5": {
+    "threshold": 0.3108282387256622,
+    "accepted": 613,
+    "absent_accepted": 11,
+    "present_declined": 54,
+    "accepted_decision_error": 0.048939641109298535,
+    "F1": 0.8036253776435045,
+    "success@5": 0.8887195121951219
+  },
+  "dev_stats_tau_0p2617": {
+    "threshold": 0.2617101,
+    "accepted": 626,
+    "absent_accepted": 15,
+    "present_declined": 45,
+    "accepted_decision_error": 0.06070287539936102,
+    "F1": 0.8113207547169812,
+    "success@5": 0.8963414634146342
+  }
+}
