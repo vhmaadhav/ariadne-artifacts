@@ -28,7 +28,7 @@ Every number in the paper's tables can be recomputed from the CSVs here with `co
 | `manifests/e15/`, `features/e15/` | 2 + 2 | E15 ground truth and per-pair feature rows (margins for the gate). |
 | `reports/e15/` | 3 | `eval_synth.json`, `eval_real.json` (scorer output, all rules, bootstrap CIs), `SUMMARY.md` (verdicts, deviations). |
 | `predictions/e16/` | 2 CSV | E16 post-registration ZNCC baseline on the E15 sets (`zncc_ms`, tau = 0.36530551 from the original development split; not part of the pre-registration): `pred_synth_zncc_ms.csv` (400 pairs), `pred_real_zncc_ms.csv` (480 pairs). |
-| `reports/e16/` | 2 JSON | `eval_synth_zncc.json`, `eval_real_zncc.json`: scorer output (metrics, bootstrap CIs, paired difference vs Drift-Sense R1). The Kaggle owner name in the input paths is replaced by `<kaggle-owner>`. |
+| `reports/e16/` | 2 JSON, 1 MD | `SUMMARY.md` (E16 write-up); `eval_synth_zncc.json`, `eval_real_zncc.json`: scorer output (metrics, bootstrap CIs, paired difference vs Drift-Sense R1). The Kaggle owner name in the input paths is replaced by `<kaggle-owner>`. |
 | `code/e15/` | 2 | `e15_eval.py` (scorer; subcommand `set`), `e15_thresholds.json` (frozen constants, copied from the prereg). |
 | `docs/PREREG_E15.md` | 1 | E15 pre-registration (commit ca78590 in the private ariadne repo, 21 Nov 2026 13:41 IST). Redacted copy: the Kaggle owner name in section 8 is replaced by `<kaggle-owner>`, so its sha256 differs from the committed file (committed: 29aefba0...). |
 | `runtime/e7_all/` | 1 | `SUMMARY.md`: latency across all four Kaggle runs and the laptop run. |
