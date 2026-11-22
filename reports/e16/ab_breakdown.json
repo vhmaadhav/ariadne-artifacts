@@ -1,0 +1,45 @@
+{
+  "description": "E15 untouched real set, present pairs only: success@5 of DS R1 and frozen ZNCC per stratum; gap = ZNCC minus DS.",
+  "inputs": [
+    "results/e15_real/manifest_real.csv",
+    "results/e15_real/pred_real_noexit.csv",
+    "results/e16/pred_real_zncc_ms.csv"
+  ],
+  "tau_ds": 0.2617101,
+  "tau_zncc": 0.36530551314353943,
+  "tol_px": 5.0,
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261010,
+    "unit": "tile (group_id)",
+    "method": "percentile"
+  },
+  "strata": {
+    "real_A": {
+      "n_present": 160,
+      "n_tiles": 40,
+      "success5_ds": 0.94375,
+      "success5_zncc": 1.0,
+      "gap_zncc_minus_ds": 0.05625000000000002,
+      "gap_ci95": [
+        0.01875,
+        0.10015624999999916
+      ]
+    },
+    "real_B": {
+      "n_present": 160,
+      "n_tiles": 40,
+      "success5_ds": 0.88125,
+      "success5_zncc": 0.96875,
+      "gap_zncc_minus_ds": 0.08750000000000002,
+      "gap_ci95": [
+        0.04375,
+        0.1375
+      ]
+    }
+  },
+  "all_present": {
+    "n_present": 320,
+    "gap_zncc_minus_ds": 0.07187500000000002
+  }
+}

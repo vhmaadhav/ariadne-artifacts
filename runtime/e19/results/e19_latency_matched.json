@@ -1,0 +1,131 @@
+{
+  "experiment": "E19 matched-latency (same machine, same session)",
+  "n": 30,
+  "pairs": [
+    "s1_00000",
+    "s1_00001",
+    "s1_00002",
+    "s1_00003",
+    "s1_00004",
+    "s1_00005",
+    "s1_00006",
+    "s1_00007",
+    "s1_00008",
+    "s1_00009",
+    "s1_00010",
+    "s1_00011",
+    "s1_00012",
+    "s1_00013",
+    "s1_00014",
+    "s1_00015",
+    "s1_00016",
+    "s1_00017",
+    "s1_00018",
+    "s1_00019",
+    "s1_00020",
+    "s1_00021",
+    "s1_00022",
+    "s1_00023",
+    "s1_00024",
+    "s1_00025",
+    "s1_00026",
+    "s1_00027",
+    "s1_00028",
+    "s1_00029"
+  ],
+  "threads": 4,
+  "serial": true,
+  "warmup": "one untimed call per method on pair 0",
+  "drift_sense": {
+    "n": 30,
+    "median_s": 6.454308854500027,
+    "iqr_s": 2.233835862500115,
+    "q1_s": 4.788844743499965,
+    "q3_s": 7.02268060600008,
+    "p95_s": 7.312722844449945,
+    "mean_s": 6.033789107133339,
+    "min_s": 3.3173698190000778,
+    "max_s": 7.581566087999818
+  },
+  "zncc_ms": {
+    "n": 30,
+    "median_s": 40.57175218650002,
+    "iqr_s": 5.923338659249964,
+    "q1_s": 36.45811378350004,
+    "q3_s": 42.38145244275,
+    "p95_s": 43.858974179400114,
+    "mean_s": 39.77315735079999,
+    "min_s": 35.06116980599995,
+    "max_s": 45.982174129999976
+  },
+  "ratio_zncc_over_ds_per_pair": {
+    "median": 6.429781443292821,
+    "median_bootstrap_ci95": [
+      5.8308740797514105,
+      7.0965249399602355
+    ],
+    "bootstrap": {
+      "resamples": 10000,
+      "seed": 20261010,
+      "unit": "pair",
+      "method": "percentile"
+    },
+    "iqr": 2.313387238801708,
+    "min": 4.875306898133819,
+    "max": 12.618504465268717
+  },
+  "decision_thresholds": {
+    "drift_sense": 0.55,
+    "zncc_ms": 0.36530551
+  },
+  "env": {
+    "lscpu_model_name": "Intel(R) Xeon(R) CPU @ 2.20GHz",
+    "lscpu_model_line": [
+      "Model name:                              Intel(R) Xeon(R) CPU @ 2.20GHz"
+    ],
+    "lscpu_cache_lines": [
+      "L1d cache:                               64 KiB (2 instances)",
+      "L1i cache:                               64 KiB (2 instances)",
+      "L2 cache:                                512 KiB (2 instances)",
+      "L3 cache:                                55 MiB (1 instance)"
+    ],
+    "cpu_mhz_first": 2199.998,
+    "cpu_mhz_min": 2199.998,
+    "cpu_mhz_max": 2199.998,
+    "cpu_count_os": 4,
+    "cpu_affinity": 4,
+    "torch_version": "2.13.0+cpu",
+    "torch_threads": 4,
+    "cv2_version": "5.0.0",
+    "cv2_threads": 4,
+    "numpy_version": "2.4.6",
+    "python": "3.13.18",
+    "torch_mkldnn_enabled": true,
+    "torch_parallel_info": "ATen/Parallel:\n\tat::get_num_threads() : 4\n\tat::get_num_interop_threads() : 2\nOpenMP 201511 (a.k.a. OpenMP 4.5)\n\tomp_get_max_threads() : 4\nIntel(R) oneAPI Math Kernel Library Version 2024.2-Product Build 20240605 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 4\nIntel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\nstd::thread::hardware_concurrency() : 4\nEnvironment variables:\n\tOMP_NUM_THREADS : 4\n\tMKL_NUM_THREADS : 4\nATen parallel backend: OpenMP\n",
+    "torch_config_blas_lines": [
+      "- Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)",
+      "- LAPACK is enabled (usually provided by MKL)",
+      "- Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=cf30153c4c131c8164ee7798e5022d810682e2cb, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xfatbin -compress-all  -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -DC10_NODEPRECATED, CXX_COMPILER=/opt/rh/gcc-toolset-13/root/usr/bin/c++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=old-style-cast -faligned-new -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-dangling-reference -Wno-error=dangling-reference -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.13.0, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF,"
+    ],
+    "weights_sha256": "e6506b7c3b2ccfd47f9337e9b95df20d0fb2b14a6d45b0a1c892d60464a71ca8",
+    "setup": {
+      "python": "3.13.18",
+      "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+      "cpus": 4,
+      "pip_returncodes": [
+        0,
+        0,
+        0
+      ]
+    },
+    "timing_scope": {
+      "drift_sense": "read_gray(reference)+read_gray(search) + locate_phase2(SHIPPED_*) + decision (confidence >= SHIPPED_THRESHOLD); excludes model load and warm-up",
+      "zncc_ms": "read_gray(reference)+read_gray(search) + zncc_ms(reference, search, label_convention) + decision (score >= 0.36530551); excludes warm-up",
+      "order": "interleaved per pair: DS(i) then ZNCC(i); serial; warm-up once per method on pair 0 (untimed)",
+      "clock": "time.perf_counter"
+    },
+    "image_shapes_unique": [
+      "{\"reference\": [1000, 1000], \"search\": [1000, 1000]}"
+    ]
+  }
+}

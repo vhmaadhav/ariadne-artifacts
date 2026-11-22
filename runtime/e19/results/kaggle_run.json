@@ -1,0 +1,11 @@
+{
+  "python": "3.13.18",
+  "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+  "cpus": 4,
+  "pip_returncodes": [
+    0,
+    0,
+    0
+  ],
+  "e19": "ok"
+}

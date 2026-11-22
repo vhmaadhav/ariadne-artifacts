@@ -1,0 +1,148 @@
+[{"stream_name":"stdout","time":1.310989673,"data":"[04:37:16] input datasets: datasets\n"}
+,{"stream_name":"stdout","time":11.337124155,"data":"[04:37:26] synthetic splits linked from /kaggle/input/datasets/maadhavvh/iris27-synth: ['dev', 'test_s1', 'test_s2', 'test_s3']\n"}
+,{"stream_name":"stdout","time":82.524126064,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stdout","time":82.524196246,"data":"bigframes 2.51.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stdout","time":82.524205333,"data":"ydata-profiling 4.18.4 requires numpy\u003c2.4,\u003e=1.22, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524212209,"data":"ydata-profiling 4.18.4 requires pandas!=1.4.0,\u003c3.0,\u003e1.5, but you have pandas 3.0.5 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524241946,"data":"google-colab 1.0.0 requires jupyter-server==2.20.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524248019,"data":"google-colab 1.0.0 requires pandas==2.2.3, but you have pandas 3.0.5 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524254189,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524262222,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524268358,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524274198,"data":"ydf 0.15.0 requires protobuf\u003c7.0.0,\u003e=5.29.1, but you have protobuf 7.36.2 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524280029,"data":"numba 0.61.2 requires numpy\u003c2.3,\u003e=1.24, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stdout","time":82.524285499,"data":"gradio 6.30.0 requires pillow\u003c13.0,\u003e=8.0, but you have pillow 13.0.0 which is incompatible.\n"}
+,{"stream_name":"stdout","time":96.183027959,"data":"torch 2.13.0+cpu cv2 5.0.0 numpy 2.4.6 pandas 3.0.5 sklearn 1.9.1 threads 2\n"}
+,{"stream_name":"stdout","time":96.860955514,"data":"Architecture:                            x86_64\n"}
+,{"stream_name":"stdout","time":96.86099960600001,"data":"CPU op-mode(s):                          32-bit, 64-bit\n"}
+,{"stream_name":"stdout","time":96.861006947,"data":"Address sizes:                           46 bits physical, 48 bits virtual\n"}
+,{"stream_name":"stdout","time":96.861013034,"data":"Byte Order:                              Little Endian\n"}
+,{"stream_name":"stdout","time":96.861018642,"data":"CPU(s):                                  4\n"}
+,{"stream_name":"stdout","time":96.861024127,"data":"On-line CPU(s) list:                     0-3\n"}
+,{"stream_name":"stdout","time":96.861029587,"data":"Vendor ID:                               GenuineIntel\n"}
+,{"stream_name":"stdout","time":96.861035266,"data":"Model name:                              Intel(R) Xeon(R) CPU @ 2.20GHz\n"}
+,{"stream_name":"stdout","time":96.861041036,"data":"CPU family:                              6\n"}
+,{"stream_name":"stdout","time":96.861046592,"data":"Model:                                   79\n"}
+,{"stream_name":"stdout","time":96.861052051,"data":"Thread(s) per core:                      2\n"}
+,{"stream_name":"stdout","time":96.861057812,"data":"Core(s) per socket:                      2\n"}
+,{"stream_name":"stdout","time":96.861063385,"data":"Socket(s):                               1\n"}
+,{"stream_name":"stdout","time":96.861079862,"data":"Stepping:                                0\n"}
+,{"stream_name":"stdout","time":96.861083117,"data":"BogoMIPS:                                4399.99\n"}
+,{"stream_name":"stdout","time":96.861086899,"data":"Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap xsaveopt arat md_clear arch_capabilities\n"}
+,{"stream_name":"stdout","time":96.861093432,"data":"Hypervisor vendor:                       KVM\n"}
+,{"stream_name":"stdout","time":96.861096507,"data":"Virtualization type:                     full\n"}
+,{"stream_name":"stdout","time":96.861101022,"data":"L1d cache:                               64 KiB (2 instances)\n"}
+,{"stream_name":"stdout","time":96.861105328,"data":"L1i cache:                               64 KiB (2 instances)\n"}
+,{"stream_name":"stdout","time":96.861109796,"data":"L2 cache:                                512 KiB (2 instances)\n"}
+,{"stream_name":"stdout","time":96.86111424,"data":"L3 cache:                                55 MiB (1 instance)\n"}
+,{"stream_name":"stdout","time":96.861118729,"data":"NUMA node(s):                            1\n"}
+,{"stream_name":"stdout","time":96.861123199,"data":"NUMA node0 CPU(s):                       0-3\n"}
+,{"stream_name":"stdout","time":96.861127426,"data":"Vulnerability Gather data sampling:      Not affected\n"}
+,{"stream_name":"stdout","time":96.861131932,"data":"Vulnerability Ghostwrite:                Not affected\n"}
+,{"stream_name":"stdout","time":96.861136563,"data":"Vulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\n"}
+,{"stream_name":"stdout","time":96.861141202,"data":"Vulnerability Itlb multihit:             Not affected\n"}
+,{"stream_name":"stdout","time":96.861145801,"data":"Vulnerability L1tf:                      Mitigation; PTE Inversion\n"}
+,{"stream_name":"stdout","time":96.861173374,"data":"Vulnerability Mds:                       Mitigation; Clear CPU buffers; SMT Host state unknown\n"}
+,{"stream_name":"stdout","time":96.861181191,"data":"Vulnerability Meltdown:                  Mitigation; PTI\n"}
+,{"stream_name":"stdout","time":96.861186078,"data":"Vulnerability Mmio stale data:           Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown\n"}
+,{"stream_name":"stdout","time":96.861191085,"data":"Vulnerability Old microcode:             Not affected\n"}
+,{"stream_name":"stdout","time":96.861195614,"data":"Vulnerability Reg file data sampling:    Not affected\n"}
+,{"stream_name":"stdout","time":96.861200211,"data":"Vulnerability Retbleed:                  Mitigation; IBRS\n"}
+,{"stream_name":"stdout","time":96.861204747,"data":"Vulnerability Spec rstack overflow:      Not affected\n"}
+,{"stream_name":"stdout","time":96.861209319,"data":"Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\n"}
+,{"stream_name":"stdout","time":96.861214187,"data":"Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\n"}
+,{"stream_name":"stdout","time":96.861219127,"data":"Vulnerability Spectre v2:                Mitigation; IBRS; IBPB conditional; STIBP conditional; RSB filling; PBRSB-eIBRS Not affected; BHI SW loop, KVM SW loop\n"}
+,{"stream_name":"stdout","time":96.861229554,"data":"Vulnerability Srbds:                     Not affected\n"}
+,{"stream_name":"stdout","time":96.861233022,"data":"Vulnerability Tsa:                       Not affected\n"}
+,{"stream_name":"stdout","time":96.861236015,"data":"Vulnerability Tsx async abort:           Mitigation; Clear CPU buffers; SMT Host state unknown\n"}
+,{"stream_name":"stdout","time":96.861239103,"data":"Vulnerability Vmscape:                   Not affected\n"}
+,{"stream_name":"stdout","time":96.863179407,"data":"Python 3.13.18\n"}
+,{"stream_name":"stdout","time":96.887413784,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":96.88744808,"data":"Mem:              31           0          21           0           8          30\n"}
+,{"stream_name":"stdout","time":96.892698252,"data":"/dev/loop2       20G  152K   20G   1% /kaggle/working\n"}
+,{"stream_name":"stdout","time":98.794316421,"data":"ENV {\n"}
+,{"stream_name":"stdout","time":98.794350745,"data":" \"lscpu_model_name\": \"Intel(R) Xeon(R) CPU @ 2.20GHz\",\n"}
+,{"stream_name":"stdout","time":98.794355616,"data":" \"lscpu_model_line\": [\n"}
+,{"stream_name":"stdout","time":98.794359151,"data":"  \"Model name:                              Intel(R) Xeon(R) CPU @ 2.20GHz\"\n"}
+,{"stream_name":"stdout","time":98.794362816,"data":" ],\n"}
+,{"stream_name":"stdout","time":98.794365891,"data":" \"lscpu_cache_lines\": [\n"}
+,{"stream_name":"stdout","time":98.794369206,"data":"  \"L1d cache:                               64 KiB (2 instances)\",\n"}
+,{"stream_name":"stdout","time":98.794372774,"data":"  \"L1i cache:                               64 KiB (2 instances)\",\n"}
+,{"stream_name":"stdout","time":98.794377381,"data":"  \"L2 cache:                                512 KiB (2 instances)\",\n"}
+,{"stream_name":"stdout","time":98.794381882,"data":"  \"L3 cache:                                55 MiB (1 instance)\"\n"}
+,{"stream_name":"stdout","time":98.794386463,"data":" ],\n"}
+,{"stream_name":"stdout","time":98.794390641,"data":" \"cpu_mhz_first\": 2199.998,\n"}
+,{"stream_name":"stdout","time":98.794395248,"data":" \"cpu_mhz_min\": 2199.998,\n"}
+,{"stream_name":"stdout","time":98.794399538,"data":" \"cpu_mhz_max\": 2199.998,\n"}
+,{"stream_name":"stdout","time":98.794403649,"data":" \"cpu_count_os\": 4,\n"}
+,{"stream_name":"stdout","time":98.794408042,"data":" \"cpu_affinity\": 4,\n"}
+,{"stream_name":"stdout","time":98.794412436,"data":" \"torch_version\": \"2.13.0+cpu\",\n"}
+,{"stream_name":"stdout","time":98.794416994,"data":" \"torch_threads\": 4,\n"}
+,{"stream_name":"stdout","time":98.794421437,"data":" \"cv2_version\": \"5.0.0\",\n"}
+,{"stream_name":"stdout","time":98.794426016,"data":" \"cv2_threads\": 4,\n"}
+,{"stream_name":"stdout","time":98.794430404,"data":" \"numpy_version\": \"2.4.6\",\n"}
+,{"stream_name":"stdout","time":98.79443535,"data":" \"python\": \"3.13.18\",\n"}
+,{"stream_name":"stdout","time":98.794439983,"data":" \"torch_mkldnn_enabled\": true,\n"}
+,{"stream_name":"stdout","time":98.794445406,"data":" \"torch_parallel_info\": \"ATen/Parallel:\\n\\tat::get_num_threads() : 4\\n\\tat::get_num_interop_threads() : 2\\nOpenMP 201511 (a.k.a. OpenMP 4.5)\\n\\tomp_get_max_threads() : 4\\nIntel(R) oneAPI Math Kernel Library Version 2024.2-Product Build 20240605 for Intel(R) 64 architecture applications\\n\\tmkl_get_max_threads() : 4\\nIntel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\\nstd::thread::hardware_concurrency() : 4\\nEnvironment variables:\\n\\tOMP_NUM_THREADS : 4\\n\\tMKL_NUM_THREADS : 4\\nATen parallel backend: OpenMP\\n\",\n"}
+,{"stream_name":"stdout","time":98.794453539,"data":" \"torch_config_blas_lines\": [\n"}
+,{"stream_name":"stdout","time":98.794471122,"data":"  \"- Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\",\n"}
+,{"stream_name":"stdout","time":98.794474601,"data":"  \"- LAPACK is enabled (usually provided by MKL)\",\n"}
+,{"stream_name":"stdout","time":98.794481707,"data":"  \"- Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=cf30153c4c131c8164ee7798e5022d810682e2cb, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xfatbin -compress-all  -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -DC10_NODEPRECATED, CXX_COMPILER=/opt/rh/gcc-toolset-13/root/usr/bin/c++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=old-style-cast -faligned-new -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-dangling-reference -Wno-error=dangling-reference -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.13.0, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF,\"\n"}
+,{"stream_name":"stdout","time":98.794492574,"data":" ],\n"}
+,{"stream_name":"stdout","time":98.79449662,"data":" \"weights_sha256\": \"e6506b7c3b2ccfd47f9337e9b95df20d0fb2b14a6d45b0a1c892d60464a71ca8\",\n"}
+,{"stream_name":"stdout","time":98.794501394,"data":" \"setup\": {\n"}
+,{"stream_name":"stdout","time":98.794505594,"data":"  \"python\": \"3.13.18\",\n"}
+,{"stream_name":"stdout","time":98.794510409,"data":"  \"platform\": \"Linux-6.18.55+-x86_64-with-glibc2.39\",\n"}
+,{"stream_name":"stdout","time":98.794515133,"data":"  \"cpus\": 4,\n"}
+,{"stream_name":"stdout","time":98.794519596,"data":"  \"pip_returncodes\": [\n"}
+,{"stream_name":"stdout","time":98.794524006,"data":"   0,\n"}
+,{"stream_name":"stdout","time":98.794528314,"data":"   0,\n"}
+,{"stream_name":"stdout","time":98.794532562,"data":"   0\n"}
+,{"stream_name":"stdout","time":98.794536887,"data":"  ]\n"}
+,{"stream_name":"stdout","time":98.794541097,"data":" },\n"}
+,{"stream_name":"stdout","time":98.794545311,"data":" \"timing_scope\": {\n"}
+,{"stream_name":"stdout","time":98.794549922,"data":"  \"drift_sense\": \"read_gray(reference)+read_gray(search) + locate_phase2(SHIPPED_*) + decision (confidence \u003e= SHIPPED_THRESHOLD); excludes model load and warm-up\",\n"}
+,{"stream_name":"stdout","time":98.794555816,"data":"  \"zncc_ms\": \"read_gray(reference)+read_gray(search) + zncc_ms(reference, search, label_convention) + decision (score \u003e= 0.36530551); excludes warm-up\",\n"}
+,{"stream_name":"stdout","time":98.794561651,"data":"  \"order\": \"interleaved per pair: DS(i) then ZNCC(i); serial; warm-up once per method on pair 0 (untimed)\",\n"}
+,{"stream_name":"stdout","time":98.794564992,"data":"  \"clock\": \"time.perf_counter\"\n"}
+,{"stream_name":"stdout","time":98.794570038,"data":" }\n"}
+,{"stream_name":"stdout","time":98.794572971,"data":"}\n"}
+,{"stream_name":"stdout","time":200.926759697,"data":"  1 s1_00000 ds=4.266s zncc=42.809s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":253.955391611,"data":"  2 s1_00001 ds=7.046s zncc=45.982s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":296.829689786,"data":"  3 s1_00002 ds=6.332s zncc=36.542s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":339.373833431,"data":"  4 s1_00003 ds=4.622s zncc=37.922s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":388.094969346,"data":"  5 s1_00004 ds=7.114s zncc=41.607s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":430.363571992,"data":"  6 s1_00005 ds=6.650s zncc=35.618s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":480.257890994,"data":"  7 s1_00006 ds=6.502s zncc=43.392s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":523.764535532,"data":"  8 s1_00007 ds=4.856s zncc=38.651s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":574.445798741,"data":"  9 s1_00008 ds=6.839s zncc=43.842s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":616.969662577,"data":" 10 s1_00009 ds=7.234s zncc=35.289s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":659.222599209,"data":" 11 s1_00010 ds=7.192s zncc=35.061s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":700.498401772,"data":" 12 s1_00011 ds=5.870s zncc=35.405s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":747.83282755,"data":" 13 s1_00012 ds=6.869s zncc=40.465s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":794.179723347,"data":" 14 s1_00013 ds=4.767s zncc=41.580s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":842.835780085,"data":" 15 s1_00014 ds=6.331s zncc=42.325s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":891.642784133,"data":" 16 s1_00015 ds=6.407s zncc=42.400s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":931.477611966,"data":" 17 s1_00016 ds=4.411s zncc=35.424s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":975.131974796,"data":" 18 s1_00017 ds=5.131s zncc=38.523s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1020.309793779,"data":" 19 s1_00018 ds=3.317s zncc=41.860s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1062.752244415,"data":" 20 s1_00019 ds=6.759s zncc=35.683s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1113.373215459,"data":" 21 s1_00020 ds=7.582s zncc=43.039s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1156.185553747,"data":" 22 s1_00021 ds=6.952s zncc=35.860s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1205.9903377,"data":" 23 s1_00022 ds=7.234s zncc=42.570s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1252.976621983,"data":" 24 s1_00023 ds=6.308s zncc=40.678s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1300.82879475,"data":" 25 s1_00024 ds=3.979s zncc=43.873s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1346.492964136,"data":" 26 s1_00025 ds=4.749s zncc=40.915s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1389.568709259,"data":" 27 s1_00026 ds=6.645s zncc=36.430s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1437.408572359,"data":" 28 s1_00027 ds=7.377s zncc=40.463s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1485.4407667,"data":" 29 s1_00028 ds=7.050s zncc=40.982s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1528.064698852,"data":" 30 s1_00029 ds=4.622s zncc=38.001s ds_status=ok zncc_status=ok\n"}
+,{"stream_name":"stdout","time":1528.088337022,"data":"SUMMARY n=30 DS median 6.454 IQR 2.234 p95 7.313 | ZNCC median 40.572 IQR 5.923 p95 43.859 | ratio median 6.43 CI [5.83, 7.10]\n"}
+,{"stream_name":"stdout","time":1528.089629163,"data":"E19 OK\n"}
+,{"stream_name":"stderr","time":1531.547245443,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":1531.547280026,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":1531.92571367,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":1531.925747867,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":1532.900991459,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":1534.323655653,"data":"[NbConvertApp] Writing 334129 bytes to __results__.html\n"}
+]
