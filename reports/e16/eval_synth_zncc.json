@@ -1,0 +1,264 @@
+{
+ "label": "post-registration baseline, threshold from the original development split",
+ "set": "synth",
+ "n_clusters": 400,
+ "cluster": "canvas",
+ "counts": {
+  "n_pairs": 400,
+  "n_present": 331,
+  "n_absent": 69
+ },
+ "zncc_ms": {
+  "tau": 0.36530551314353943,
+  "tau_source": "original dev split: results/e2/report_test600.json thresholds (zncc_ms, chosen on dev labels; frozen split-1 value 0.3653055)",
+  "accepted": 322,
+  "metrics": {
+   "success@1": {
+    "point": 0.24169184290030213,
+    "ci": [
+     0.19763923480472684,
+     0.28828967003813627
+    ]
+   },
+   "success@5": {
+    "point": 0.38368580060422963,
+    "ci": [
+     0.33330882352941177,
+     0.4375
+    ]
+   },
+   "wrong_repeats_count": {
+    "point": 140.0,
+    "ci": [
+     121.0,
+     158.0
+    ]
+   },
+   "wrong_repeats_rate": {
+    "point": 0.43478260869565216,
+    "ci": [
+     0.38066061487012864,
+     0.48718354430379746
+    ]
+   },
+   "accepted_decision_error": {
+    "point": 0.6055900621118012,
+    "ci": [
+     0.5508982035928144,
+     0.6566347915935586
+    ]
+   },
+   "absent_accepted_same": {
+    "point": null,
+    "ci": [
+     null,
+     null
+    ]
+   },
+   "absent_accepted_cross": {
+    "point": null,
+    "ci": [
+     null,
+     null
+    ]
+   },
+   "absent_accepted_all": {
+    "point": 0.7246376811594203,
+    "ci": [
+     0.6144535283993116,
+     0.826679012345679
+    ]
+   },
+   "coverage": {
+    "point": 0.805,
+    "ci": [
+     0.765,
+     0.8425
+    ]
+   },
+   "F1_rejection": {
+    "point": 0.2585034013605442,
+    "ci": [
+     0.16215222575516694,
+     0.35211667733674773
+    ]
+   }
+  }
+ },
+ "ds_R1": {
+  "tau": 0.2617101,
+  "tau_source": "e15_thresholds.json tau_main (PREREG_E15 headline rule)",
+  "accepted": 317,
+  "metrics": {
+   "success@1": {
+    "point": 0.6586102719033232,
+    "ci": [
+     0.6042280337361531,
+     0.7089596193527602
+    ]
+   },
+   "success@5": {
+    "point": 0.8700906344410876,
+    "ci": [
+     0.8328267477203647,
+     0.9062523602719033
+    ]
+   },
+   "wrong_repeats_count": {
+    "point": 16.0,
+    "ci": [
+     9.0,
+     24.0
+    ]
+   },
+   "wrong_repeats_rate": {
+    "point": 0.050473186119873815,
+    "ci": [
+     0.027861627106983144,
+     0.07453769057029924
+    ]
+   },
+   "accepted_decision_error": {
+    "point": 0.0914826498422713,
+    "ci": [
+     0.06116207951070336,
+     0.12380952380952381
+    ]
+   },
+   "absent_accepted_same": {
+    "point": null,
+    "ci": [
+     null,
+     null
+    ]
+   },
+   "absent_accepted_cross": {
+    "point": null,
+    "ci": [
+     null,
+     null
+    ]
+   },
+   "absent_accepted_all": {
+    "point": 0.11594202898550725,
+    "ci": [
+     0.04477611940298507,
+     0.19402985074626866
+    ]
+   },
+   "coverage": {
+    "point": 0.7925,
+    "ci": [
+     0.75,
+     0.8325
+    ]
+   },
+   "F1_rejection": {
+    "point": 0.8026315789473685,
+    "ci": [
+     0.7286794019933555,
+     0.8648648648648649
+    ]
+   }
+  }
+ },
+ "paired_zncc_minus_dsR1": {
+  "success@1": {
+   "point": -0.4169184290030211,
+   "ci": [
+    -0.47115747734138974,
+    -0.36144143046173133
+   ]
+  },
+  "success@5": {
+   "point": -0.48640483383685795,
+   "ci": [
+    -0.5387090187021181,
+    -0.43517857142857147
+   ]
+  },
+  "wrong_repeats_count": {
+   "point": 124.0,
+   "ci": [
+    104.0,
+    143.0
+   ]
+  },
+  "wrong_repeats_rate": {
+   "point": 0.3843094225757783,
+   "ci": [
+    0.329373213419402,
+    0.4373206265000869
+   ]
+  },
+  "accepted_decision_error": {
+   "point": 0.5141074122695299,
+   "ci": [
+    0.4599148096198153,
+    0.5681664687539703
+   ]
+  },
+  "absent_accepted_same": {
+   "point": null,
+   "ci": [
+    null,
+    null
+   ]
+  },
+  "absent_accepted_cross": {
+   "point": null,
+   "ci": [
+    null,
+    null
+   ]
+  },
+  "absent_accepted_all": {
+   "point": 0.6086956521739131,
+   "ci": [
+    0.4687401107594937,
+    0.7397260273972603
+   ]
+  },
+  "coverage": {
+   "point": 0.012500000000000067,
+   "ci": [
+    -0.03749999999999998,
+    0.06499999999999995
+   ]
+  },
+  "F1_rejection": {
+   "point": -0.5441281775868243,
+   "ci": [
+    -0.6503536575163851,
+    -0.4320511442563296
+   ]
+  }
+ },
+ "presence_auroc": {
+  "zncc_ms": {
+   "point": 0.5850518849336661,
+   "ci": [
+    0.5083810929072342,
+    0.6596350649210537
+   ]
+  },
+  "ds_score": {
+   "point": 0.9768159726783134,
+   "ci": [
+    0.9622728911818742,
+    0.9883567479903053
+   ]
+  }
+ },
+ "bootstrap": {
+  "B": 2000,
+  "seed": 20261010,
+  "draw": "default_rng(seed).integers(0, K, size=(B, K))"
+ },
+ "inputs": {
+  "manifest": "/tmp/exp/results/ariadne/E15/manifest_synth.csv",
+  "zncc": "/tmp/exp/results/ariadne/E16/pred_synth_zncc_ms.csv",
+  "ds": "/kaggle/input/datasets/<kaggle-owner>/ariadne-e16-zncc/pred_synth_noexit.csv",
+  "baseline": "/kaggle/input/datasets/<kaggle-owner>/ariadne-e16-zncc/e16_baseline.json"
+ }
+}

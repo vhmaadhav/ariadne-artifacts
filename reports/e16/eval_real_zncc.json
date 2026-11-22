@@ -1,0 +1,266 @@
+{
+ "label": "post-registration baseline, threshold from the original development split",
+ "set": "real",
+ "n_clusters": 40,
+ "cluster": "tile",
+ "counts": {
+  "n_pairs": 480,
+  "n_present": 320,
+  "n_absent": 160,
+  "n_same": 80,
+  "n_cross": 80
+ },
+ "zncc_ms": {
+  "tau": 0.36530551314353943,
+  "tau_source": "original dev split: results/e2/report_test600.json thresholds (zncc_ms, chosen on dev labels; frozen split-1 value 0.3653055)",
+  "accepted": 478,
+  "metrics": {
+   "success@1": {
+    "point": 0.978125,
+    "ci": [
+     0.946875,
+     1.0
+    ]
+   },
+   "success@5": {
+    "point": 0.984375,
+    "ci": [
+     0.959375,
+     1.0
+    ]
+   },
+   "wrong_repeats_count": {
+    "point": 3.0,
+    "ci": [
+     0.0,
+     8.0
+    ]
+   },
+   "wrong_repeats_rate": {
+    "point": 0.006276150627615063,
+    "ci": [
+     0.0,
+     0.016771488469601678
+    ]
+   },
+   "accepted_decision_error": {
+    "point": 0.3410041841004184,
+    "ci": [
+     0.3305439330543933,
+     0.35564853556485354
+    ]
+   },
+   "absent_accepted_same": {
+    "point": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   },
+   "absent_accepted_cross": {
+    "point": 0.9875,
+    "ci": [
+     0.9625,
+     1.0
+    ]
+   },
+   "absent_accepted_all": {
+    "point": 0.99375,
+    "ci": [
+     0.98125,
+     1.0
+    ]
+   },
+   "coverage": {
+    "point": 0.9958333333333333,
+    "ci": [
+     0.9895833333333334,
+     1.0
+    ]
+   },
+   "F1_rejection": {
+    "point": 0.012345679012345678,
+    "ci": [
+     0.0,
+     0.03680981595092025
+    ]
+   }
+  }
+ },
+ "ds_R1": {
+  "tau": 0.2617101,
+  "tau_source": "e15_thresholds.json tau_main (PREREG_E15 headline rule)",
+  "accepted": 357,
+  "metrics": {
+   "success@1": {
+    "point": 0.88125,
+    "ci": [
+     0.83125,
+     0.925
+    ]
+   },
+   "success@5": {
+    "point": 0.9125,
+    "ci": [
+     0.8625,
+     0.953125
+    ]
+   },
+   "wrong_repeats_count": {
+    "point": 14.0,
+    "ci": [
+     5.0,
+     24.0
+    ]
+   },
+   "wrong_repeats_rate": {
+    "point": 0.0392156862745098,
+    "ci": [
+     0.014284696784696784,
+     0.06896789864736139
+    ]
+   },
+   "accepted_decision_error": {
+    "point": 0.18207282913165265,
+    "ci": [
+     0.14483752475794426,
+     0.22281240995101337
+    ]
+   },
+   "absent_accepted_same": {
+    "point": 0.5375,
+    "ci": [
+     0.425,
+     0.65
+    ]
+   },
+   "absent_accepted_cross": {
+    "point": 0.1,
+    "ci": [
+     0.0375,
+     0.175
+    ]
+   },
+   "absent_accepted_all": {
+    "point": 0.31875,
+    "ci": [
+     0.25,
+     0.3875
+    ]
+   },
+   "coverage": {
+    "point": 0.74375,
+    "ci": [
+     0.7166666666666667,
+     0.7708333333333334
+    ]
+   },
+   "F1_rejection": {
+    "point": 0.7703180212014135,
+    "ci": [
+     0.706766917293233,
+     0.8280701754385965
+    ]
+   }
+  }
+ },
+ "paired_zncc_minus_dsR1": {
+  "success@1": {
+   "point": 0.09687500000000004,
+   "ci": [
+    0.059374999999999956,
+    0.140625
+   ]
+  },
+  "success@5": {
+   "point": 0.07187500000000002,
+   "ci": [
+    0.04062500000000002,
+    0.109375
+   ]
+  },
+  "wrong_repeats_count": {
+   "point": -11.0,
+   "ci": [
+    -20.025,
+    -3.0
+   ]
+  },
+  "wrong_repeats_rate": {
+   "point": -0.03293953564689474,
+   "ci": [
+    -0.05969282024652133,
+    -0.011334686628548763
+   ]
+  },
+  "accepted_decision_error": {
+   "point": 0.15893135496876573,
+   "ci": [
+    0.12280680254309981,
+    0.19266385600150188
+   ]
+  },
+  "absent_accepted_same": {
+   "point": 0.4625,
+   "ci": [
+    0.35,
+    0.575
+   ]
+  },
+  "absent_accepted_cross": {
+   "point": 0.8875000000000001,
+   "ci": [
+    0.8125,
+    0.9500000000000001
+   ]
+  },
+  "absent_accepted_all": {
+   "point": 0.675,
+   "ci": [
+    0.60625,
+    0.74375
+   ]
+  },
+  "coverage": {
+   "point": 0.2520833333333333,
+   "ci": [
+    0.2270833333333333,
+    0.27708333333333335
+   ]
+  },
+  "F1_rejection": {
+   "point": -0.7579723421890678,
+   "ci": [
+    -0.8168473193348852,
+    -0.6967215452268833
+   ]
+  }
+ },
+ "presence_auroc": {
+  "zncc_ms": {
+   "point": 0.975703125,
+   "ci": [
+    0.9531240234375,
+    0.99033251953125
+   ]
+  },
+  "ds_score": {
+   "point": 0.945078125,
+   "ci": [
+    0.9195478515625,
+    0.96798828125
+   ]
+  }
+ },
+ "bootstrap": {
+  "B": 2000,
+  "seed": 20261010,
+  "draw": "default_rng(seed).integers(0, K, size=(B, K))"
+ },
+ "inputs": {
+  "manifest": "/tmp/exp/results/ariadne/E15/manifest_real.csv",
+  "zncc": "/tmp/exp/results/ariadne/E16/pred_real_zncc_ms.csv",
+  "ds": "/kaggle/input/datasets/<kaggle-owner>/ariadne-e16-zncc/pred_real_noexit.csv",
+  "baseline": "/kaggle/input/datasets/<kaggle-owner>/ariadne-e16-zncc/e16_baseline.json"
+ }
+}
