@@ -1,6 +1,6 @@
 # Drift-Sense: evaluation artifacts (IRIS 27)
 
-Evaluation artifacts for **Drift-Sense: Cross-Magnification Reference Localisation with Rejection in Repeating SEM Layouts**
+Evaluation artifacts for **Drift-Sense: Cross-Magnification Reference Localization with Rejection in Repeating SEM Layouts**
 by Maadhav V H, Sachin A S and Nakul T (IRIS 27). Released with the paper.
 
 This repository holds the ground-truth manifests, the per-pair prediction CSVs for every method and variant in the paper,
@@ -10,15 +10,19 @@ Every number in the paper's tables can be recomputed from the CSVs here with `co
 
 ## Contents
 
+Every file (except `.gitignore` and the checksum file itself) has a sha256 line in `SHA256SUMS.txt`; verify with `sha256sum -c SHA256SUMS.txt`.
+
+File counts below are the tracked files in each folder (subfolders are counted in their own rows).
+
 | Folder | Files | What |
 |---|---|---|
-| `manifests/` | 10 CSV, 4 freeze files | Ground truth per pair: pair id, split, `found` (present/absent), pose `gt_x, gt_y, gt_scale, gt_rot_deg`, label convention, severity/stratum. Synthetic dev (150), synthetic test (600 = 3 seeds x 200), synthetic confirmation (400 = 2 seeds x 200), real tiles (800), larger dev split (800), E8 unfiltered absent set (160). |
+| `manifests/` | 8 CSV, 4 freeze files | Ground truth per pair: pair id, split, `found` (present/absent), pose `gt_x, gt_y, gt_scale, gt_rot_deg`, label convention, severity/stratum. Synthetic dev (150), synthetic test (600 = 3 seeds x 200), synthetic confirmation (400 = 2 seeds x 200), real tiles (800), larger dev split (800), E8 unfiltered absent set (160). |
 | `manifests/freeze/` | 4 | sha256 lists and frozen-run records for the confirmation and larger dev sets (image hashes; the images are not included). |
 | `manifests/real_tiles_used.tsv` | 1 | The 40 real SEM tiles used (20 M1, 20 M2). |
 | `predictions/driftsense/` | 30 CSV | Drift-Sense outputs: `shipped` and `noexit` variants on each split, the ablations (`ablations/`), the alternative decoders (`alt_decoders/`), a second-host rerun (`second_host/`), and the latency run. |
-| `predictions/zncc/`, `predictions/loftr/`, `predictions/sift/`, `predictions/qatm/` | 11 CSV, 1 JSON, 4 CSV + 1 JSON | Baselines: exhaustive ZNCC search, LoFTR (outdoor), SIFT + RANSAC and SIFT + LightGlue (both tuned on dev only), and QATM (Cheng et al. 2019, VGG19 quality-aware matching, threshold on dev only). |
-| `predictions/acceptance/` | 18 | EVT and logistic acceptance outputs (test, real, confirmation), their thresholds, the fitted logistic model, the rule, and the risk-coverage table. |
-| `reports/` | 32 | Report files (JSON and Markdown) written by `iris_report.py` and the summaries of each experiment. |
+| `predictions/zncc/`, `predictions/loftr/`, `predictions/sift/`, `predictions/qatm/` | 16 (14 CSV, 2 JSON) | Baselines: exhaustive ZNCC search, LoFTR (outdoor), SIFT + RANSAC and SIFT + LightGlue (both tuned on dev only), and QATM (Cheng et al. 2019, VGG19 quality-aware matching, threshold on dev only). |
+| `predictions/acceptance/` | 16 (7 CSV, 8 JSON, 1 TXT) | EVT and logistic acceptance outputs (test, real, confirmation), their thresholds, the fitted logistic model, the rule, and the risk-coverage table. |
+| `reports/` | 43 (18 JSON, 25 MD; plus 9 in `reports/e15/`, `e16/`, `e18/` listed below) | Report files (JSON and Markdown) written by `iris_report.py` and the summaries of each experiment. |
 | `runtime/` | 3 | Per-stage latency of the E7 run and its parity check. |
 | `code/evaluation/` | 6 | `iris_report.py` (metrics, bootstrap, re-thresholding), `iris_eval.py`, `iris_baselines.py`, `iris_tune_baselines.py`, `iris_make_real.py`, `summarize_report.py`. |
 | `code/acceptance/` | 3 | `evt_accept.py`, `logistic_accept.py` (acceptance rules), `log_hypotheses.py` (feature rows). |
@@ -28,7 +32,7 @@ Every number in the paper's tables can be recomputed from the CSVs here with `co
 | `manifests/e15/`, `features/e15/` | 2 + 2 | E15 ground truth and per-pair feature rows (margins for the gate). |
 | `reports/e15/` | 3 | `eval_synth.json`, `eval_real.json` (scorer output, all rules, bootstrap CIs), `SUMMARY.md` (verdicts, deviations). |
 | `predictions/e16/` | 2 CSV | E16 post-registration ZNCC baseline on the E15 sets (`zncc_ms`, tau = 0.36530551 from the original development split; not part of the pre-registration): `pred_synth_zncc_ms.csv` (400 pairs), `pred_real_zncc_ms.csv` (480 pairs). |
-| `reports/e16/` | 2 JSON, 1 MD | `SUMMARY.md` (E16 write-up); `eval_synth_zncc.json`, `eval_real_zncc.json`: scorer output (metrics, bootstrap CIs, paired difference vs Drift-Sense R1). The Kaggle owner name in the input paths is replaced by `<kaggle-owner>`. |
+| `reports/e16/` | 2 JSON, 1 MD | `SUMMARY.md` (E16 write-up); `eval_synth_zncc.json`, `eval_real_zncc.json`: scorer output (metrics, bootstrap CIs, paired difference vs Drift-Sense R1). The Kaggle owner handle in the input paths is replaced by `<kaggle-owner>` in these two JSON files only (and in the redacted `docs/PREREG_E15.md`). The original pre-registration (`prereg/PREREG_E15.md`, kept byte-identical so its hash matches the paper) and the E19 run log (`runtime/e19/`) still show the Kaggle handle. |
 | `reports/e16/ab_breakdown.json`, `code/e16/e16_ab_breakdown.py` | 1 JSON, 1 script | E16 clean (real_A) vs noisy (real_B) breakdown of the E15 real set: success@5 of Drift-Sense R1 and frozen ZNCC per stratum, paired gap with tile-cluster bootstrap. |
 | `reports/e18/`, `code/e18/e18_eval.py`, `predictions/e18/`, `manifests/e18/` | 2 files, 1 script, 8 files, 6 CSV | E18 (exploratory, post-registration) search-frame distortion test: `SUMMARY.md`, `eval_e18.json`; scorer (imports `e15_eval.py` and `e15_thresholds.json` from `code/e15/`); Drift-Sense no-exit predictions and features and ZNCC halves for the mid and high levels; part and full manifests. |
 | `runtime/e19/` | 8 files (JSON, CSV, logs) | E19 matched latency run: `results/e19_latency_matched.json`, `e19_latency_matched_pairs.csv`, run and environment logs. No images. |
@@ -37,7 +41,7 @@ Every number in the paper's tables can be recomputed from the CSVs here with `co
 | `docs/PREREG_E15.md` | 1 | E15 pre-registration (commit ca78590 in the private ariadne repo, 21 Nov 2026 13:41 IST). Redacted copy: the Kaggle owner name in section 8 is replaced by `<kaggle-owner>`, so its sha256 differs from the committed file (committed: 29aefba0...). |
 | `runtime/e7_all/` | 1 | `SUMMARY.md`: latency across all four Kaggle runs and the laptop run. |
 | `code/tests/`, `code/patches/` | 8, 2 | Unit tests (not re-run in this layout) and the two patches applied to the public pipeline. |
-| `docs/` | 4 | `FREEZE.md` (frozen configuration), `iris_spec.md` (metric definitions and conventions), `VARIANTS.md` (decode settings of each variant), `confirm_set_generation.md` (how the confirmation set was generated). |
+| `docs/` | 5 (4 listed here; `docs/PREREG_E15.md` listed below) | `FREEZE.md` (frozen configuration), `iris_spec.md` (metric definitions and conventions), `VARIANTS.md` (decode settings of each variant), `confirm_set_generation.md` (how the confirmation set was generated). |
 
 ## Table and figure map
 

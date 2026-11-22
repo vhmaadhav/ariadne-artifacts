@@ -45,3 +45,5 @@ Paired Δ success@5 (ZNCC minus R1): +0.072 [+0.041, +0.109].
 - **Real (imposed-pose pairs cut from one capture):** exhaustive ZNCC localises present references better than Drift-Sense and ranks presence slightly better (AUROC 0.976 vs 0.945). The two images share pixels and noise, which favours direct correlation; this is limitation (ii) of the paper.
 - **Real threshold:** with its development threshold, ZNCC accepts almost every absent reference, so its decision is unusable as a presence gate. A real-calibrated threshold was not tried (single threshold, no sweep).
 - **Cost:** ZNCC takes about 45 s per pair per process, against about 5 s for Drift-Sense.
+
+**Note (2026-11-22):** superseded by the matched same-machine timing in `runtime/e19` (ZNCC 40.6 s vs Drift-Sense 6.5 s median per pair; median per-pair ratio 6.4×, 95% CI 5.8–7.1).
